@@ -49,6 +49,9 @@
 		    </crs>
 		</verticalCRSValues>
     </geoloc>
+    <abstract>
+      <title>Descrizione</title>
+    </abstract>
     <verticalExtent>
         <title>Estensione verticale</title>
     </verticalExtent>
@@ -73,6 +76,27 @@
     <positionalAccuracy>
         <title>Accuratezza posizionale</title>
     </positionalAccuracy>
+    <equivalentScale>
+      <title>Scala Equivalente</title>
+    </equivalentScale>
+    <spatialRepresentationType>
+      <title>Tipo di rappresentazione spaziale</title>
+    </spatialRepresentationType>
+    <issueIdentification>
+      <title>Identificatore dell'argomento</title>
+    </issueIdentification>
+    <otherCitationDetails>
+      <title>Altri dettagli</title>
+    </otherCitationDetails>
+    <maintenanceAndUpdateFrequency>
+      <title>Frequenza di Aggiornamento</title>
+    </maintenanceAndUpdateFrequency>
+    <legalConstraints>
+      <title>Vincoli di accesso</title>
+    </legalConstraints>
+    <securityConstraints>
+      <title>Vincoli di sicurezza</title>
+    </securityConstraints>
 
   <!-- New strings added for the AngularJS editor -->
   <!-- View and tabs -->

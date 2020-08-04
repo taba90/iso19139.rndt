@@ -326,7 +326,31 @@
   <!-- View configuration -->
   <views>
 
-    <view name="default" default="true" upAndDownControlHidden="true">
+    <view name="default" upAndDownControlHidden="true">
+
+      <sidePanel>
+        <!-- General online source manager
+        <directive data-gn-onlinesrc-list=""/>
+        -->
+
+        <!-- Simple overview manager + online source manger for other types
+        Limit the max number of overviews with data-number-of-overviews="3" attribute.
+        In the full view, editor can access and manage the file store and
+        thumbnail name and description not supported by the overview manager.
+        -->
+        <directive data-gn-validation-report=""/>
+        <directive data-gn-overview-manager=""/>
+        <directive data-gn-onlinesrc-list=""
+                   data-types="onlinesrc|parent|dataset|service|source|sibling|associated|fcats"/>
+
+        <directive gn-geo-publisher=""
+                   data-ng-if="gnCurrentEdit.geoPublisherConfig"
+                   data-config="{{gnCurrentEdit.geoPublisherConfig}}"
+                   data-lang="lang"/>
+
+        <directive data-gn-suggestion-list=""/>
+        <directive data-gn-need-help="user-guide/describing-information/creating-metadata.html"/>
+      </sidePanel>
 
       <tab id="default" default="true" mode="flat">
 
@@ -913,7 +937,7 @@
           <field name="encoding" templateModeOnly="true" notDisplayedIfMissing="true"
                  xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat"
                  del="."
-                 if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+                 if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) = 0">
             <template>
               <values>
                 <key label="format"
@@ -946,7 +970,7 @@
 
           <action type="add" name="encoding" or="distributionFormat" btnLabel="addDistributionFormat"
                   in="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution"
-          if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+          if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) = 0">
             <template>
               <snippet>
                 <gmd:distributionFormat>

@@ -35,7 +35,7 @@
                 version="2.0"
                 exclude-result-prefixes="#all">
 
-  <xsl:include href="../iso19139/convert/functions.xsl"/>
+  <xsl:import href="../iso19139/convert/functions.xsl"/>
 
   <xsl:function name="gn-fn-rel:translate">
     <xsl:param name="el"/>

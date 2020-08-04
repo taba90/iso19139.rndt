@@ -510,6 +510,15 @@
 		<label>Numero reale</label>
 		<description>Quantità espressa come valore numerico reale</description>
 	</element>
+	<element name= "gco:Measure">
+		<label>Risoluzione</label>
+		<description>risoluzione</description>
+	</element>
+  <element name="gco:Distance">
+    <label>Distance</label>
+    <description>Distance</description>
+    <condition></condition>
+  </element>
 	<element name="gml:BaseUnit">
 		<label>Unità di misura elementare</label>
 		<description>Unità di misura che non può essere derivata da altre unità di misura elementari nell'ambito di dato sistema di misura</description>
