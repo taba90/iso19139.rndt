@@ -631,50 +631,81 @@
           </template>
 
 
-          <!-- fields for generic keywords out of tempaltes-->
-          <field     xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
-            gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:type/gmd:MD_KeywordTypeCode/@codeListValue='theme'
-            and not(gmd:thesaurusName)]/gmd:keyword"
-                     or="keyword"
-                     in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
-            gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:type/gmd:MD_KeywordTypeCode/@codeListValue='theme'
-            and not(gmd:thesaurusName)]"/>
+          <section name="noThesaurusName">
+            <field
+              xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
+            gmd:descriptiveKeywords
+            [gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'INSPIRE Service taxonomy']"
+              del ="."/>
 
-          <field
-                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
-            gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:type/gmd:MD_KeywordTypeCode/@codeListValue='theme'
-            and not(gmd:thesaurusName)]/gmd:keyword"
-                  or="keyword"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
-            gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:type/gmd:MD_KeywordTypeCode/@codeListValue='theme'
-            and not(gmd:thesaurusName)]"/>
+            <action type="add"
+                    btnLabel="inspireServiceTaxonomy"
+                    or="descriptiveKeywords"
+                    in="/gmd:MD_Metadata/gmd:identificationInfo/*"
+                    if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
 
-          <field
-                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
-            gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[not(../gmd:thesaurusName)]"
-                  or="keyword"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
-            gmd:descriptiveKeywords/gmd:MD_Keywords[not(gmd:thesaurusName)]"/>
+              <template>
+                <snippet>
+                  <gmd:descriptiveKeywords>
+                    <gmd:MD_Keywords>
+                      <gmd:keyword>
+                        <gco:CharacterString></gco:CharacterString>
+                      </gmd:keyword>
+                      <gmd:type>
+                        <gmd:MD_KeywordTypeCode
+                          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+                          codeListValue="theme"/>
+                      </gmd:type>
+                      <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                          <gmd:title>
+                            <gco:CharacterString>INSPIRE Service taxonomy
+                            </gco:CharacterString>
+                          </gmd:title>
+                          <gmd:date>
+                            <gmd:CI_Date>
+                              <gmd:date>
+                                <gco:Date>2008-06-01</gco:Date>
+                              </gmd:date>
+                              <gmd:dateType>
+                                <gmd:CI_DateTypeCode
+                                  codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                                  codeListValue="publication"/>
+                              </gmd:dateType>
+                            </gmd:CI_Date>
+                          </gmd:date>
+                          <gmd:identifier>
+                            <gmd:MD_Identifier>
+                              <gmd:code>
+                                <gmx:Anchor
+                                  xlink:href="http://localhost:8080/geonetwork/srv/eng/thesaurus.download?ref=external.theme.inspire-service-taxonomy">
+                                  geonetwork.thesaurus.external.theme.inspire-service-taxonomy
+                                </gmx:Anchor>
+                              </gmd:code>
+                            </gmd:MD_Identifier>
+                          </gmd:identifier>
+                        </gmd:CI_Citation>
+                      </gmd:thesaurusName>
+                    </gmd:MD_Keywords>
+                  </gmd:descriptiveKeywords>
+                </snippet>
+              </template>
+            </action>
 
 
 
-
-          <field
+            <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/
             gmd:descriptiveKeywords
-            [contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'INSPIRE themes')]"/>
-
-          <!-- FIXME: avoid thesaurus reference in metadata(if possible) -->
-          <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
-            gmd:descriptiveKeywords"/>
+            [contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'INSPIRE themes')]"
+          del ="."/>
 
           <!-- FIXME: MUST be provided in template and thesaurus available in the catalog, to be displayed properly -->
           <action type="add"
                   btnLabel="inspireTheme"
                   or="descriptiveKeywords"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*"
-          if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
 
             <template>
               <snippet>
@@ -723,59 +754,49 @@
               </snippet>
             </template>
           </action>
-          <action type="add"
-                  btnLabel="inspireTheme"
-                  or="descriptiveKeywords"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/*"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
 
-            <template>
-              <snippet>
-                <gmd:descriptiveKeywords>
-                  <gmd:MD_Keywords>
-                    <gmd:keyword>
-                      <gco:CharacterString></gco:CharacterString>
-                    </gmd:keyword>
-                    <gmd:type>
-                      <gmd:MD_KeywordTypeCode
-                        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
-                        codeListValue="theme"/>
-                    </gmd:type>
-                    <gmd:thesaurusName>
-                      <gmd:CI_Citation>
-                        <gmd:title>
-                          <gco:CharacterString>INSPIRE Service taxonomy
-                          </gco:CharacterString>
-                        </gmd:title>
-                        <gmd:date>
-                          <gmd:CI_Date>
-                            <gmd:date>
-                              <gco:Date>2008-06-01</gco:Date>
-                            </gmd:date>
-                            <gmd:dateType>
-                              <gmd:CI_DateTypeCode
-                                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
-                                codeListValue="publication"/>
-                            </gmd:dateType>
-                          </gmd:CI_Date>
-                        </gmd:date>
-                        <gmd:identifier>
-                          <gmd:MD_Identifier>
-                            <gmd:code>
-                              <gmx:Anchor
-                                xlink:href="http://localhost:8080/geonetwork/srv/eng/thesaurus.download?ref=external.theme.inspire-service-taxonomy">
-                                geonetwork.thesaurus.external.theme.inspire-service-taxonomy
-                              </gmx:Anchor>
-                            </gmd:code>
-                          </gmd:MD_Identifier>
-                        </gmd:identifier>
-                      </gmd:CI_Citation>
-                    </gmd:thesaurusName>
-                  </gmd:MD_Keywords>
-                </gmd:descriptiveKeywords>
-              </snippet>
-            </template>
-          </action>
+          <!-- free text keywords-->
+
+          <section name="freeTextKeywords">
+            <!-- Keywords without thesaurus information of type theme -->
+            <field
+              xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
+              gmd:descriptiveKeywords[not(gmd:MD_Keywords/gmd:thesaurusName)]"
+              or="descriptiveKeywords"
+              in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
+              del="."/>
+
+            <field
+              xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
+              gmd:descriptiveKeywords[not(gmd:MD_Keywords/gmd:thesaurusName)]"
+              or="descriptiveKeywords"
+              in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
+              del="../.."/>
+
+           <action
+             type="add"
+             or="descriptiveKeywords"
+             in="/gmd:MD_Metadata/gmd:identificationInfo/*">
+              <template>
+                <snippet>
+                  <gmd:descriptiveKeywords>
+                    <gmd:MD_Keywords>
+                      <gmd:keyword>
+                        <gco:CharacterString></gco:CharacterString>
+                      </gmd:keyword>
+                      <gmd:type>
+                        <gmd:MD_KeywordTypeCode
+                          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+                           codeListValue="theme"/>
+                      </gmd:type>
+                    </gmd:MD_Keywords>
+                  </gmd:descriptiveKeywords>
+                </snippet>
+              </template>
+            </action>
+           </section>
+          </section>
+
 
           <section name="resourceConstraints">
             <field name="useLimitation" del="." removable="true"

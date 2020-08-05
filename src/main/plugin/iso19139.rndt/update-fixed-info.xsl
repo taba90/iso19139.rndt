@@ -10,8 +10,7 @@
                   exclude-result-prefixes="gmd srv gmx">
 
     <xsl:include href="../iso19139/convert/functions.xsl"/>
-
-    <!-- ================================================================= -->
+  <!-- ================================================================= -->
 
     <xsl:template match="/root">
         <xsl:apply-templates select="gmd:MD_Metadata"/>
@@ -628,8 +627,8 @@
     </xsl:template>
 
     <!-- Don't save some gmd:thesaurusName|gmd:MD_Keywords sub elements because not required by RNDT -->
-    <xsl:template match="gmd:thesaurusName/gmd:CI_Citation/gmd:identifier"/>
-    <xsl:template match="gmd:MD_Keywords/gmd:type"/>
+    <!--xsl:template match="gmd:thesaurusName/gmd:CI_Citation/gmd:identifier"/>
+    <xsl:template match="gmd:MD_Keywords/gmd:type"/-->
     <!-- ======== -->
 
     <xsl:template match="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:pass">
