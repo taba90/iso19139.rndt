@@ -41,15 +41,17 @@
     -->
 
 
-    <xsl:variable name="isNew" select="not(contains(//gmd:fileIdentifier/gco:CharacterString, /root/env/uuid))"/>
+  <xsl:variable name="isNew" select="not(contains(//gmd:fileIdentifier/gco:CharacterString, /root/env/uuid))"/>
 
-    <xsl:variable name="ipaJustAssigned" select="string(/root/env/uuid) != string(//gmd:fileIdentifier/gco:CharacterString) and ends-with(//gmd:fileIdentifier/gco:CharacterString, /root/env/uuid)"/>
+  <xsl:variable name="ipaJustAssigned" select="string(/root/env/uuid) != string(//gmd:fileIdentifier/gco:CharacterString) and ends-with(//gmd:fileIdentifier/gco:CharacterString, /root/env/uuid)"/>
 
-    <xsl:variable name="fileId">
+  <xsl:variable name="iPA" select="concat(substring-before(substring-after(/root/env/group,'iPA:'),':'),'.')"/>
+
+  <xsl:variable name="fileId">
         <xsl:choose>
             <xsl:when test="$isNew">
 
-                <xsl:value-of select="concat('p_tn:',/root/env/uuid)"/>
+                <xsl:value-of select="concat($iPA,/root/env/uuid)"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="//gmd:fileIdentifier/gco:CharacterString"/>
@@ -69,7 +71,9 @@
             <xsl:if test="$isNew">
                 <xsl:message>INFO: creazione di nuovo metadato</xsl:message>
             </xsl:if>
-            <xsl:message>INFO: /root/env/uuid is <xsl:value-of select="/root/env/uuid"/></xsl:message>
+          root/env/config/
+          <xsl:message>INFO: entire doc is <xsl:value-of select="/root"/></xsl:message>
+          <xsl:message>INFO: /root/env/uuid is <xsl:value-of select="/root/env/uuid"/></xsl:message>
             <xsl:message>INFO: /root/env/parentUuid is <xsl:value-of select="/root/env/parentUuid"/></xsl:message>
             <xsl:message>INFO: old fileId is <xsl:value-of select="//gmd:fileIdentifier/gco:CharacterString"/></xsl:message>
             <xsl:message>INFO: old parentiId is <xsl:value-of select="//gmd:parentIdentifier/gco:CharacterString"/></xsl:message>
