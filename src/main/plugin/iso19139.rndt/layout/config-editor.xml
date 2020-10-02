@@ -139,8 +139,6 @@
     <name>gmd:distributionInfo</name>
     <name>gmd:portrayalCatalogueInfo</name>
     <name>gmd:portrayalCatalogueCitation</name>
-    <name>gmd:thesaurusName</name>
-    <name>gmd:resourceConstraints</name>
     <name>gmd:spatialRepresentationInfo</name>
     <name>gmd:pointOfContact</name>
     <name>gmd:contact</name>
@@ -184,8 +182,6 @@
     <name>gmd:dimension</name>
     <name>gmd:presentationForm</name>
     <name>gco:Record</name>
-    <name>gmd:descriptiveKeywords</name>
-    <name>gmd:MD_Keywords</name>
     <name>gmd:resourceMaintenance</name>
     <name>gmd:MD_MaintenanceInformation</name>
     <name>gmd:minimumValue</name>
@@ -1027,6 +1023,7 @@
             </action>
           </section>
 
+          <section name="resourceConstraints">
             <field
               xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation"
               del="."/>
@@ -1035,24 +1032,27 @@
                     or="resourceConstraints"
                     btnLabel="useLimitation"
                     in="/gmd:MD_Metadata/gmd:identificationInfo/*">
-            <template>
-            <snippet>
-              <gmd:resourceConstraints>
-                <gmd:MD_Constraints>
-                  <gmd:useLimitation>
-                    <gco:CharacterString></gco:CharacterString>
-                  </gmd:useLimitation>
-                </gmd:MD_Constraints>
-              </gmd:resourceConstraints>
-            </snippet>
-            </template>
+              <template>
+                <snippet>
+                  <gmd:resourceConstraints>
+                    <gmd:MD_Constraints>
+                      <gmd:useLimitation>
+                        <gco:CharacterString></gco:CharacterString>
+                      </gmd:useLimitation>
+                    </gmd:MD_Constraints>
+                  </gmd:resourceConstraints>
+                </snippet>
+              </template>
             </action>
 
-            <field
-                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints"
+            <field name="accessConstraints"
+                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/*
+                   /gmd:resourceConstraints[./gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions'
+                   and starts-with(./gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess')]"
                    del="."/>
 
-            <action type="add"  or="resourceConstraints"  btnLabel="accessConstraints"
+            <action type="add"  or="resourceConstraints"
+                    btnLabel="accessConstraints"
                     in="/gmd:MD_Metadata/gmd:identificationInfo/*">
               <template>
                 <snippet label="accessConstraints">
@@ -1061,7 +1061,7 @@
                       <gmd:accessConstraints>
                         <gmd:MD_RestrictionCode
                           codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
-                          codeListValue="otherRestrictions"/>
+                          codeListValue="otherRestrictions">altri vincoli </gmd:MD_RestrictionCode>
                       </gmd:accessConstraints>
                       <gmd:otherConstraints>
                         <gmx:Anchor
@@ -1084,6 +1084,12 @@
               </template>
             </action>
 
+            <field name="useConstraints"
+                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints
+                 [./gmd:MD_LegalConstraints/*/gmd:MD_RestrictionCode/@codeListValue ='otherRestrictions' and
+                 not(starts-with(./gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess'))]"
+                   del="."/>
+
             <action type="add" or="resourceConstraints"  btnLabel="useConstraints"
                     in="/gmd:MD_Metadata/gmd:identificationInfo/*">
               <template>
@@ -1097,9 +1103,27 @@
                           codeListValue="otherRestrictions"/>
                       </gmd:useConstraints>
                       <gmd:otherConstraints>
-                      <gmx:Anchor
-                        xlink:href="http://inspire.ec.europa.eu/metadata-codelist/
+                        <gmx:Anchor
+                          xlink:href="http://inspire.ec.europa.eu/metadata-codelist/
 ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabile</gmx:Anchor>
+                      </gmd:otherConstraints>
+                    </gmd:MD_LegalConstraints>
+                  </gmd:resourceConstraints>
+                </snippet>
+                <snippet label="unknownCondition">
+                  <gmd:resourceConstraints>
+                    <gmd:MD_LegalConstraints>
+                      <gmd:accessConstraints/>
+                      <gmd:useConstraints>
+                        <gmd:MD_RestrictionCode
+                          codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+                          codeListValue="otherRestrictions"/>
+                      </gmd:useConstraints>
+                      <gmd:otherConstraints>
+                        <gmx:Anchor
+                          xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">
+                          Condizioni sconosciute
+                        </gmx:Anchor>
                       </gmd:otherConstraints>
                     </gmd:MD_LegalConstraints>
                   </gmd:resourceConstraints>
@@ -1120,6 +1144,7 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
                 </snippet>
               </template>
             </action>
+          </section>
 
           <section name="extent">
 
