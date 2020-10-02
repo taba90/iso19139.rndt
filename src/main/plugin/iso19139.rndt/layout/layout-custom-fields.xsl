@@ -2,24 +2,21 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gts="http://www.isotc211.org/2005/gts"
   xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmx="http://www.isotc211.org/2005/gmx"
-  xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink"
-	xmlns:mcp="http://schemas.aodn.org.au/mcp-2.0"
-  xmlns:gn="http://www.fao.org/geonetwork"
-  xmlns:gn-fn-core="http://geonetwork-opensource.org/xsl/functions/core"
   xmlns:gn-fn-metadata="http://geonetwork-opensource.org/xsl/functions/metadata"
-  xmlns:gn-fn-iso19139="http://geonetwork-opensource.org/xsl/functions/profiles/iso19139"
-  xmlns:exslt="http://exslt.org/common" exclude-result-prefixes="#all">
+  xmlns:mcp="http://schemas.aodn.org.au/mcp-2.0"
+  xmlns:gn="http://www.fao.org/geonetwork">
+
+  <xsl:include href="layout-custom-fields-date.xsl"/>
 
   <!-- Readonly element -->
-  <xsl:template mode="mode-iso19139" priority="2000" match="mcp:revisionDate">
-
+  <xsl:template mode="mode-iso19139.rndt" priority="2000" match="mcp:revisionDate">
+    <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:call-template name="render-element">
       <xsl:with-param name="label" select="gn-fn-metadata:getLabel($schema, name(), $labels)/label"/>
       <xsl:with-param name="value" select="*"/>
       <xsl:with-param name="cls" select="local-name()"/>
-      <xsl:with-param name="xpath" select="gn-fn-metadata:getXPath(.)"/>
-      <xsl:with-param name="type" select="gn-fn-metadata:getFieldType($editorConfig, name(), '')"/>
+      <xsl:with-param name="xpath" select="$xpath"/>
+      <xsl:with-param name="type" select="gn-fn-metadata:getFieldType($editorConfig, name(), '', $xpath)"/>
       <xsl:with-param name="name" select="''"/>
       <xsl:with-param name="editInfo" select="*/gn:element"/>
       <xsl:with-param name="parentEditInfo" select="gn:element"/>
@@ -33,7 +30,7 @@
     * gmd:resourceConstraints is boxed element and the title
     * of the fieldset is the creative commons license name
   -->
-  <xsl:template mode="mode-iso19139" priority="33000" match="gmd:resourceConstraints">
+  <xsl:template mode="mode-iso19139.rndt" priority="33000" match="gmd:resourceConstraints">
     <xsl:param name="schema" select="'iso19139.mcp-2.0'" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
 
@@ -67,7 +64,7 @@
       <xsl:with-param name="xpath" select="$xpath"/>
       <xsl:with-param name="attributesSnippet" select="$attributes"/>
       <xsl:with-param name="subTreeSnippet">
-        <xsl:apply-templates mode="mode-iso19139" select="*">
+        <xsl:apply-templates mode="mode-iso19139.rndt" select="*">
           <xsl:with-param name="schema" select="$schema"/>
           <xsl:with-param name="labels" select="$labels"/>
         </xsl:apply-templates>
@@ -76,7 +73,7 @@
   </xsl:template>
 
   <!-- Creative Commons License Picker -->
-  <xsl:template mode="mode-iso19139" match="mcp:MD_Commons" priority="33000">
+  <xsl:template mode="mode-iso19139.rndt" match="mcp:MD_Commons" priority="33000">
     <xsl:param name="schema" select="'iso19139.rndt'" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
 
@@ -170,7 +167,7 @@
   -->
 
 
-  <xsl:template mode="mode-iso19139" priority="9999999" match="mcp:parameterName|mcp:parameterUnits">
+  <xsl:template mode="mode-iso19139.rndt" priority="9999999" match="mcp:parameterName|mcp:parameterUnits">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
 
@@ -208,7 +205,7 @@
       <xsl:with-param name="xpath" select="$xpath"/>
       <xsl:with-param name="attributesSnippet" select="$attributes"/>
       <xsl:with-param name="subTreeSnippet">
-        <xsl:apply-templates mode="mode-iso19139" select="*">
+        <xsl:apply-templates mode="mode-iso19139.rndt" select="*">
           <xsl:with-param name="schema" select="$schema"/>
           <xsl:with-param name="labels" select="$labels"/>
         </xsl:apply-templates>
@@ -219,7 +216,7 @@
 
 	<!-- Offer a thesaurus picker for mcp:DP_Term -->
 
-  <xsl:template mode="mode-iso19139" match="mcp:DP_Term" priority="9999999">
+  <xsl:template mode="mode-iso19139.rndt" match="mcp:DP_Term" priority="9999999">
 
     <xsl:variable name="thesaurusUrl"
       select="mcp:vocabularyRelationship/mcp:DP_VocabularyRelationship/mcp:vocabularyListURL/gmd:URL"/>
@@ -278,7 +275,7 @@
 
       </xsl:when>
       <xsl:otherwise>
-        <xsl:apply-templates mode="mode-iso19139" select="*"/>
+        <xsl:apply-templates mode="mode-iso19139.rndt" select="*"/>
       </xsl:otherwise>
     </xsl:choose>
 

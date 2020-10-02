@@ -100,19 +100,22 @@
     </securityConstraints>
 
   <noConditionApply>Nessuna condizione applicabile</noConditionApply>
+  <unknownCondition>Condizioni sconosciute</unknownCondition>
   <freeText>Testo libero</freeText>
 
   <!-- New strings added for the AngularJS editor -->
   <!-- View and tabs -->
   <advanced>Full</advanced>
-  <default>Comuni</default>
+  <default>Metadati Comuni</default>
   <rndt-view>RNDT</rndt-view>
   <simple>Simple</simple>
   <inspire>Parole chiave &amp; Temi INSPIRE</inspire>
   <resource>Resource</resource>
   <xml>XML</xml>
   <metadata>Metadati</metadata>
-  <identificationInfo>Informazioni di identificazione</identificationInfo>
+  <metadataInfo>Informazioni sui metadati</metadataInfo>
+  <identificationInfo>Identificazione dei dati</identificationInfo>
+  <serviceIdentificatio>Identificazione dei servizi</serviceIdentificatio>
   <serviceType>Tipo di servizio</serviceType>
   <descriptiveKeywords>Parole chiave</descriptiveKeywords>
   <keyword>Parola chiave</keyword>
@@ -228,6 +231,7 @@
   <add-resource-idHelp>Compose the resource identifier using the catalog URL and the metadata identifier (eg. http://www.organization.org/catalogue/5391bf69-44bc-4ea0-8cc0-6cf6c3bc81ae).</add-resource-idHelp>
   <add-extent-from-geokeywords>Compute extent from keyword</add-extent-from-geokeywords>
   <add-extent-from-geokeywordsHelp>Analyze each keyword of type place and add matching extent.</add-extent-from-geokeywordsHelp>
+  <addFromThesaurus>Aggiungi keyword da thesaurus</addFromThesaurus>
   <sds-add-qualityofservice>Qualità dei servizi</sds-add-qualityofservice>
   <datasetAndSeries>Dataset e serie</datasetAndSeries>
   <services>Servizi</services>

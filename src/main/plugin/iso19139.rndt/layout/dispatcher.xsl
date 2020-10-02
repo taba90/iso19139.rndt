@@ -11,6 +11,7 @@
                 xmlns:saxon="http://saxon.sf.net/" extension-element-prefixes="saxon"
                 exclude-result-prefixes="#all">
 
+  <xsl:include href="layout.xsl"/>
   <!--
     Load the schema configuration for the editor.
     Same configuration as ISO19139 here.
@@ -51,42 +52,6 @@
     <xsl:call-template name="evaluate-iso19139-boolean">
       <xsl:with-param name="base" select="$base"/>
       <xsl:with-param name="in" select="$in"/>
-    </xsl:call-template>
-  </xsl:template>
-
-
-  <xsl:template name="get-iso19139.rndt-is-service">
-    <xsl:call-template name="get-iso19139-is-service">
-    </xsl:call-template>
-  </xsl:template>
-
-  <xsl:template name="get-iso19139.rndt-language">
-    <xsl:call-template name="get-iso19139-language">
-    </xsl:call-template>
-  </xsl:template>
-
-  <xsl:template name="get-iso19139.rndt-other-languages-as-json">
-    <xsl:call-template name="get-iso19139-other-languages-as-json">
-    </xsl:call-template>
-  </xsl:template>
-
-  <xsl:template name="get-iso19139.rndt-other-languages">
-    <xsl:call-template name="get-iso19139-other-languages">
-    </xsl:call-template>
-  </xsl:template>
-
-  <xsl:template name="get-iso19139.rndt-extents-as-json">
-    <xsl:call-template name="get-iso19139-extents-as-json">
-    </xsl:call-template>
-  </xsl:template>
-
-  <xsl:template name="get-iso19139.rndt-online-source-config">
-    <xsl:call-template name="get-iso19139-online-source-config">
-    </xsl:call-template>
-  </xsl:template>
-
-  <xsl:template name="get-iso19139.rndt-title">
-    <xsl:call-template name="get-iso19139-title">
     </xsl:call-template>
   </xsl:template>
 

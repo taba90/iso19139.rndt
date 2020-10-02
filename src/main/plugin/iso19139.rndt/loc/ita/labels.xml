@@ -28,6 +28,37 @@
 		<help>Testo libero. Da evitare abbreviazioni.</help>
 	</element>
 
+  <element name="gmd:LanguageCode">
+    <label>Codice lingua</label>
+
+    <description>Elenco dei codici per le 24 lingue ufficiali della UE</description>
+    <helper>
+      <option value="bul" >Bulgaro</option>
+      <option value="cze" >Ceco</option>
+      <option value="hrv" >Croato</option>
+      <option value="dan" >Danese</option>
+      <option value="est" >Estone</option>
+      <option value="fin" >Finlandese</option>
+      <option value="Francese" >fre</option>
+      <option value="gre" >Greco</option>
+      <option value="eng" >Inglese</option>
+      <option value="gle" >Irlandese</option>
+      <option value="ita" >Italiano</option>
+      <option value="lav" >Lettone</option>
+      <option value="lit" >Lituano</option>
+      <option value="dut" >Olandese</option>
+      <option value="pol" >Polacco</option>
+      <option value="por" >Portoghese</option>
+      <option value="rum" >Rumeno</option>
+      <option value="slo" >Slovacco</option>
+      <option value="slv" >Sloveno</option>
+      <option value="spa" >Spagnolo</option>
+      <option value="swe" >Svedese</option>
+      <option value="ger" >Tedesco</option>
+      <option value="hun" >Ungherese</option>
+    </helper>
+  </element>
+
 	<element name="RNDTcrs">
 		<label>Identificatore CRS</label>
 
@@ -72,6 +103,18 @@
 		</helper>
 	</element>
 
+  <element name="gmd:applicationProfile" alias="applicationProfile">
+  <label>Profilo dell'applicazione</label>
+   <helper sort="true">
+    <option value="other">Altri servizi</option>
+    <option value="download">Servizio di scarimento</option>
+    <option value="discovery">Servizio di ricerca</option>
+     <option value="invoke">Servizio di richiesta dei servizi di dati territoriali</option>
+     <option value="transformation">Servizio di conversione</option>
+    <option value="view">Servizio di consultazione</option>
+   </helper>
+  </element>
+
 	<element name="gmd:code" context="gmd:RS_Identifier">
 		<label>Identificatore</label>
 		<description>Identificatore univoco della risorsa</description>
@@ -86,7 +129,7 @@
     <label>Formato di presentazione</label>
     <description>Modalità in cui la risorsa è rappresentata</description>
   </element>
-	<element name="gmd:hierarchyLevel">
+	<element name="gmd:hierarchyLevel" readonly="true">
 		<label>Livello gerarchico</label>
 		<description>Categoria di informazione cui vengono applicati metadati</description>
 		<condition>Obbligatorio</condition>
@@ -146,7 +189,7 @@
     <description>Unità di misura dei valori di qualità dei dati</description>
   </element>
   <element name="gco:Record">
-    <label>Record</label>
+    <label>Valore</label>
     <description/>
   </element>
 	<element name="srv:couplingType">
@@ -569,6 +612,11 @@
 		<_condition>condizionato / deve essere documentato se ISO/IEC 10646-1 non è utilizzato e non è definito dall’encoding</_condition>
 		<help>L’elemento deve assumere uno dei valori della lista “MD_CharacterSetCode” (§ 3.4.3.5 – all. 2 DM)</help>
 	</element>
+  <element name="gmd:spatialResolution" id="38.0">
+    <label>Risoluzione spaziale</label>
+    <description>Fattore che fornisce la comprensione generale della densità dei dati nel dataset
+    </description>
+  </element>
 	<element name="gmd:spatialRepresentationInfo" id="12.0">
 		<label>Tipo di rappresentazione spaziale</label>
 		<description>Metodo di rappresentazione spaziale dei dati</description>

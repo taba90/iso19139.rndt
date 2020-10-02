@@ -342,21 +342,37 @@
 
     <!-- Only set metadataStandardName and metadataStandardVersion
     if not set. -->
-    <xsl:template match="gmd:metadataStandardName[@gco:nilReason='missing' or gco:CharacterString='']" priority="10">
+    <xsl:template match="gmd:metadataStandardName" priority="10">
+      <xsl:if test="./gco:CharacterString='' or ./gco:CharacterString !='Linee Guida RNDT'">
         <xsl:copy>
-            <gco:CharacterString>DM - Regole tecniche RNDT</gco:CharacterString>
+          <gco:CharacterString>Linee Guida RNDT</gco:CharacterString>
         </xsl:copy>
+      </xsl:if>
     </xsl:template>
 
     <!-- ================================================================= -->
 
-    <xsl:template match="gmd:metadataStandardVersion[@gco:nilReason='missing' or gco:CharacterString='']" priority="10">
+    <xsl:template match="gmd:metadataStandardVersion" priority="10">
+      <xsl:if test="./gco:CharacterString='' or ./gco:CharacterString != '2.0'">
         <xsl:copy>
-            <gco:CharacterString>10 novembre 2011</gco:CharacterString>
+          <gco:CharacterString>2.0</gco:CharacterString>
         </xsl:copy>
+      </xsl:if>
     </xsl:template>
 
     <!-- ================================================================= -->
+
+  <!-- ================================================================= -->
+
+  <xsl:template match="gmd:hierarchyLevelName" priority="10">
+    <xsl:if test="exists(../gmd:identification/srv:SV_ServiceIdentification)">
+      <xsl:copy>
+        <gco:CharacterString>servizio</gco:CharacterString>
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- ================================================================= -->
 
     <xsl:template match="@gml:id">
         <xsl:choose>
