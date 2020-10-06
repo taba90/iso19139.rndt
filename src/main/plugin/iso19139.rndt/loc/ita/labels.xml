@@ -570,6 +570,10 @@
     <label>Altri dettagli</label>
     <description>Ulteriori informazioni di citazione</description>
   </element>
+  <element name="gmd:hierarchyLevelName">
+    <label>Nome del livello gerarchico</label>
+    <description>Nome del livello gerarchico per il quale è fornito il metadato</description>
+  </element>
 	<element name="gmd:referenceSystemIdentifier">
 		<label>Identificatore del sistema di riferimento</label>
 		<description>Identificartore del sistema di riferimento</description>
@@ -674,6 +678,10 @@
 		<label>Risoluzione</label>
 		<description>risoluzione</description>
 	</element>
+  <element name="gmd:measureDescription" id="102.0">
+    <label>Descrizione della misura</label>
+    <description>Descrizione della misura da determinare</description>
+  </element>
   <element name="gco:Distance">
     <label>Distance</label>
     <description>Distance</description>
@@ -893,6 +901,19 @@
     <label>Offline</label>
     <description>Informazioni sui supporti offline dai quali la risorsa può essere ottenuta
     </description>
+  </element>
+
+  <element name="srv:operationName">
+    <label>Nome dell'operazione</label>
+    <helper>
+      <option value="GetCapabilities">GetCapabilities</option>
+      <option value="GetRecords">GetRecords</option>
+      <option value="GetMap">GetMap</option>
+      <option value="Get Download Service Metadata">Get Download Service Metadata</option>
+      <option value="Get Spatial Dataset">Get Spatial Dataset</option>
+      <option value="Describe Spatial Dataset"> Describe Spatial Dataset</option>
+      <option value="Link Download Service">Link Download Service</option>
+    </helper>
   </element>
 </labels>
 

@@ -343,11 +343,23 @@
     <!-- Only set metadataStandardName and metadataStandardVersion
     if not set. -->
     <xsl:template match="gmd:metadataStandardName" priority="10">
-      <xsl:if test="./gco:CharacterString='' or ./gco:CharacterString !='Linee Guida RNDT'">
-        <xsl:copy>
-          <gco:CharacterString>Linee Guida RNDT</gco:CharacterString>
-        </xsl:copy>
-      </xsl:if>
+      <xsl:choose>
+        <xsl:when test="exists(./gco:CharacterString)">
+          <xsl:if test="./gco:CharacterString='' or ./gco:CharacterString !='Linee Guida RNDT'">
+            <xsl:copy>
+              <gco:CharacterString>Linee Guida RNDT</gco:CharacterString>
+            </xsl:copy>
+          </xsl:if>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:if test="./gmx:Anchor='' or ./gmx:Anchor !='Linee Guida RNDT'">
+            <xsl:copy>
+              <gmx:Anchor xlink:href="https://registry.geodati.gov.it/document/lgrndt">Linee Guida RNDT</gmx:Anchor>
+            </xsl:copy>
+          </xsl:if>
+        </xsl:otherwise>
+      </xsl:choose>
+
     </xsl:template>
 
     <!-- ================================================================= -->
@@ -365,10 +377,20 @@
   <!-- ================================================================= -->
 
   <xsl:template match="gmd:hierarchyLevelName" priority="10">
-    <xsl:if test="exists(../gmd:identification/srv:SV_ServiceIdentification)">
+    <xsl:if test="exists(../gmd:identificationInfo/srv:SV_ServiceIdentification)">
       <xsl:copy>
         <gco:CharacterString>servizio</gco:CharacterString>
       </xsl:copy>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="gmd:hierarchyLevel" priority="10">
+    <xsl:if test="exists(../gmd:identificationInfo/srv:SV_ServiceIdentification)">
+        <gmd:hierarchyLevel>
+      <gmd:MD_ScopeCode
+        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
+        codeListValue="service">service</gmd:MD_ScopeCode>
+    </gmd:hierarchyLevel>
     </xsl:if>
   </xsl:template>
 
@@ -574,12 +596,12 @@
     error on XSD validation. -->
     <xsl:template match="srv:operatesOn">
         <xsl:choose>
-            <xsl:when test="$ipaDefined and not(starts-with(@uuidref, $iPA))">
+            <xsl:when test="$ipaDefined and not(starts-with(@xlink:href, $iPA)) and @xlink:href != ''">
                 <xsl:message>ATTENZIONE: operatesOn: codice iPA non corrisponde. Eliminazione operatesOn (<xsl:value-of select="@uuidref"/>)</xsl:message>
             </xsl:when>
-            <xsl:when test=".[not(@uuidref)]">
+            <xsl:when test=".[not(@xlink:href)]">
                 <xsl:copy>
-                    <xsl:attribute name="uuidref" select="''"/>
+                    <xsl:attribute name="xlink:href" select="''"/>
                     <xsl:apply-templates select="@*"/>
                 </xsl:copy>
             </xsl:when>

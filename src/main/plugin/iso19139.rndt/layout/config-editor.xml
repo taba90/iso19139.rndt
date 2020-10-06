@@ -162,9 +162,9 @@
     <name>gmd:EX_TemporalExtent</name>
     <name>gmd:MD_Distributor</name>
     <name>srv:containsOperations</name>
+    <name>srv:SV_OperationMetadata</name>
     <name>srv:parameters</name>
     <name>srv:SV_Parameter</name>
-    <name>srv:operatesOn</name>
     <name>gmd:metadataConstraints</name>
     <name>gmd:aggregationInfo</name>
     <name>gmd:processStep</name>
@@ -330,7 +330,7 @@
 
       <tab id="default" default="true" mode="flat">
 
-        <section name="metadata">
+        <section name="metadataInfo">
 
           <field xpath="/gmd:MD_Metadata/gmd:fileIdentifier"/>
 
@@ -466,7 +466,9 @@
 
           <field xpath="/gmd:MD_Metadata/gmd:dateStamp" or ="dateStamp" in="/gmd:MD_Metadata"/>
           <field xpath="/gmd:MD_Metadata/gmd:metadataStandardName" or="metadataStandardName" in="/gmd:MD_Metadata"/>
+
           <field xpath="/gmd:MD_Metadata/gmd:metadataStandardVersion" or="metadataStandardVersion" in="/gmd:MD_Metadata"/>
+
         </section>
 
         <section name="identificationInfo">
@@ -990,8 +992,8 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
 
             <section name="temporalSection">
               <field templateModeOnly="true" notDisplayedIfMissing="true"
-                     xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement"
-                     if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+                     xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent/gmd:EX_Extent/gmd:temporalElement"
+                     >
                 <template>
                   <values>
 
@@ -1031,7 +1033,7 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
               </field>
 
               <action type="add" name="extent" or="extent" btnLabel="temporalSection"
-                      in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+                      in="/gmd:MD_Metadata/gmd:identificationInfo/*">
                 <template>
                   <snippet>
                     <gmd:extent>
@@ -2555,40 +2557,39 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
 
           <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevel" or ="hierarchyLevel" in ="/gmd:MD_Metadata"/>
 
+
           <action type="add" btnLabel="hierarchyLevel"
                   name="hierarchyLevel" or="hierarchyLevel"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"
+                  if="not(gmd:MD_Metadata/gmd:hierarchyLevel)"
                   in="/gmd:MD_Metadata">
             <template>
               <snippet>
                 <gmd:hierarchyLevel>
                   <gmd:MD_ScopeCode
                     codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
-                    codeListValue="service"/>
+                    codeListValue="service">service</gmd:MD_ScopeCode>
                 </gmd:hierarchyLevel>
               </snippet>
             </template>
           </action>
 
-          <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevel" or ="hierarchyLevel" in ="/gmd:MD_Metadata"/>
+          <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevelName"
+                 or ="hierarchyLevelName" in="/gmd:MD_Metadata"/>
 
-
-          <action type="add" btnLabel="hierarchyLevel"
-                  name="hierarchyLevel" or="hierarchyLevel"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) = 0"
-                  in="/gmd:MD_Metadata">
+          <action type="add" btnLabel="hierarchyLevelName"
+                  or="hierarchyLevelName"
+                  in="gmd:MD_Metadata"
+                  if="not(gmd:MD_Metadata/hierarchyLevelName)"
+          >
             <template>
               <snippet>
-                <gmd:hierarchyLevel>
-                  <gmd:MD_ScopeCode
-                    codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
-                    codeListValue="dataset"/>
-                </gmd:hierarchyLevel>
+                <gmd:hierarchyLevelName>
+                  <gmd:CharacterString>servizio</gmd:CharacterString>
+                </gmd:hierarchyLevelName>
               </snippet>
             </template>
           </action>
 
-        <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevelName" or ="hierarchyLevelName" in ="/gmd:MD_Metadata"/>
         </section>
         <section name="serviceIdentification">
           <!-- services specific -->
@@ -2602,35 +2603,38 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
                  or="couplingType"
                  in="gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"/>
 
-          <field templateModeOnly="true" notDisplayedIfMissing="true"
-                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:operatesOn"
-                 del="."
-                 if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
-            <template>
-              <values>
-                <key label="operatesOn"
-                     xpath="@xlink:href"
-                     tooltip="srv:operatesOn">
-                </key>
-              </values>
-              <snippet>
-                <srv:operatesOn xlink:href="{{operatesOn}}" />
-              </snippet>
-            </template>
-          </field>
-          <action type="add"
-                  btnLabel="operatesOn"
-                  or="operatesOn"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
-            <template>
-              <snippet>
-                <srv:operatesOn xlink:href=""></srv:operatesOn>
-              </snippet>
-            </template>
-          </action>
+          <section name="operatesOn">
+            <field name="operatesOn" templateModeOnly="true" notDisplayedIfMissing="true"
+                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:operatesOn"
+                   del=".">
+              <template>
+                <values>
+                  <key label="operatesOn"
+                       required="true"
+                       xpath="@xlink:href"
+                       tooltip="srv:operatesOn">
+                  </key>
+                </values>
+                <snippet>
+                  <srv:operatesOn xlink:href="{{operatesOn}}" />
+                </snippet>
+              </template>
+            </field>
+            <action type="add"
+                    btnLabel="operatesOn"
+                    or="operatesOn"
+                    in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
+                    if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+              <template>
+                <snippet>
+                  <srv:operatesOn xlink:href="" />
+                </snippet>
+              </template>
+            </action>
+          </section>
 
           <field
+            name="containsOperations"
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:containsOperations"/>
 
           <action type="add"
@@ -2719,7 +2723,7 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
         </section>
 
 
-        <section name="dataDistribution" displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) = 0">
+        <section name="dataDistribution" displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
           <field
             xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions"/>
 
@@ -2751,20 +2755,57 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
                         </gmd:function>
                       </gmd:CI_OnlineResource>
                     </gmd:onLine>
-                    <gmd:applicationProfile>
-                      <gmx:Anchor
-                        xlink:href=""/>
-                    </gmd:applicationProfile>
                   </gmd:MD_DigitalTransferOptions>
                 </gmd:transferOptions>
               </snippet>
             </template>
           </action>
-
         </section>
 
         <!-- Conformity - datasets -->
         <section name="servicesQualityInfo">
+
+          <section name="qualityLevel">
+            <field xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope/gmd:level"/>
+            <field  name="levelDescription" xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope/gmd:levelDescription"/>
+
+            <action type="add" or="scope"
+                    in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality"
+                    if="count(/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope)=0">
+              <template>
+                <snippet>
+                  <gmd:scope>
+                    <gmd:DQ_Scope>
+                      <gmd:level>
+                        <gmd:MD_ScopeCode codeListValue="service"
+                                          codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode">
+                          servizio
+                        </gmd:MD_ScopeCode>
+                      </gmd:level>
+                      <gmd:levelDescription>
+                        <gmd:MD_ScopeDescription>
+                          <gmd:other>
+                            <gco:CharacterString>servizio</gco:CharacterString>
+                          </gmd:other>
+                        </gmd:MD_ScopeDescription>
+                      </gmd:levelDescription>
+                    </gmd:DQ_Scope>
+                  </gmd:scope>
+                </snippet>
+              </template>
+            </action>
+          </section>
+
+
+          <field
+            xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency" del=".."/>
+
+          <action type="process"
+                  process="sds-add-qualityofservice"
+                  if="(count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[text()='availability'])=0 or
+                       count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[text()='performance'])=0 or
+                       count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[text()='capacity'])=0 )"/>
+
 
           <field name="conformitySpecifications" templateModeOnly="true"
                  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/
@@ -2783,7 +2824,7 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
                 </key>
                 <key label="conformity_date"
                      xpath="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date"
-                     />
+                />
                 <key label="pass"
                      xpath="gmd:DQ_ConformanceResult/gmd:pass/gco:Boolean"
                      use="gn-checkbox-with-nilreason">
@@ -2838,7 +2879,7 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
                 </key>
                 <key label="conformity_date"
                      xpath="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date"
-                     />
+                />
                 <key label="pass"
                      xpath="gmd:DQ_ConformanceResult/gmd:pass/gco:Boolean"
                      use="gn-checkbox-with-nilreason">
@@ -2968,43 +3009,43 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
                   </gmd:DQ_DomainConsistency>
                 </gmd:report>
               </snippet>
-            <snippet label="freeText">
-              <gmd:report>
-                <gmd:DQ_DomainConsistency>
-                  <gmd:result>
-                    <gmd:DQ_ConformanceResult>
-                      <gmd:specification>
-                        <gmd:CI_Citation>
-                          <gmd:title>
-                            <gmx:Anchor
-                              xlink:href=""></gmx:Anchor>
-                          </gmd:title>
-                          <gmd:date>
-                            <gmd:CI_Date>
-                              <gmd:date>
-                                <gco:Date></gco:Date>
-                              </gmd:date>
-                              <gmd:dateType>
-                                <gmd:CI_DateTypeCode
-                                  codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                  codeListValue="publication"/>
-                              </gmd:dateType>
-                            </gmd:CI_Date>
-                          </gmd:date>
-                        </gmd:CI_Citation>
-                      </gmd:specification>
-                      <gmd:explanation>
-                        <gco:CharacterString>Fare riferimento alle
-                          specifiche indicate</gco:CharacterString>
-                      </gmd:explanation>
-                      <gmd:pass gco:nilReason="">
-                        <gco:Boolean>true</gco:Boolean>
-                      </gmd:pass>
-                    </gmd:DQ_ConformanceResult>
-                  </gmd:result>
-                </gmd:DQ_DomainConsistency>
-              </gmd:report>
-            </snippet>
+              <snippet label="freeText">
+                <gmd:report>
+                  <gmd:DQ_DomainConsistency>
+                    <gmd:result>
+                      <gmd:DQ_ConformanceResult>
+                        <gmd:specification>
+                          <gmd:CI_Citation>
+                            <gmd:title>
+                              <gmx:Anchor
+                                xlink:href=""></gmx:Anchor>
+                            </gmd:title>
+                            <gmd:date>
+                              <gmd:CI_Date>
+                                <gmd:date>
+                                  <gco:Date></gco:Date>
+                                </gmd:date>
+                                <gmd:dateType>
+                                  <gmd:CI_DateTypeCode
+                                    codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                    codeListValue="publication"/>
+                                </gmd:dateType>
+                              </gmd:CI_Date>
+                            </gmd:date>
+                          </gmd:CI_Citation>
+                        </gmd:specification>
+                        <gmd:explanation>
+                          <gco:CharacterString>Fare riferimento alle
+                            specifiche indicate</gco:CharacterString>
+                        </gmd:explanation>
+                        <gmd:pass gco:nilReason="">
+                          <gco:Boolean>true</gco:Boolean>
+                        </gmd:pass>
+                      </gmd:DQ_ConformanceResult>
+                    </gmd:result>
+                  </gmd:DQ_DomainConsistency>
+                </gmd:report>
+              </snippet>
             </template>
           </action>
 
@@ -3015,90 +3056,52 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
                   gco:LocalName/text()='other' and count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/
                   gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult[gmd:specification/
                   gmd:CI_Citation/gmd:title/gmx:Anchor/text()!='invocable']) = 0">
-          <template>
-          <snippet>
-            <gmd:report>
-              <gmd:DQ_DomainConsistency>
-                <gmd:result>
-                  <gmd:DQ_ConformanceResult>
-                    <gmd:specification>
-                      <gmd:CI_Citation>
-                        <gmd:title>
-                          <gmx:Anchor
-                            xlink:href="http://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-invocable"
-                            xlink:title="INSPIRE Invocable Spatial Data Services metadata">
-                            invocable
-                          </gmx:Anchor>
-                        </gmd:title>
-                        <gmd:date>
-                          <gmd:CI_Date>
-                            <gmd:date>
-                              <gco:Date>2016-05-01</gco:Date>
-                            </gmd:date>
-                            <gmd:dateType>
-                              <gmd:CI_DateTypeCode
-                                codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                codeListValue="publication"/>
-                            </gmd:dateType>
-                          </gmd:CI_Date>
-                        </gmd:date>
-                      </gmd:CI_Citation>
-                    </gmd:specification>
-                    <gmd:explanation>
-                      <gco:CharacterString>Questo servizio di dati
-                        territoriali è conforme ai requisiti INSPIRE per i Servizi di Dati Territoriali
-                        Invocabili</gco:CharacterString>
-                    </gmd:explanation>
-                    <gmd:pass>
-                      <gco:Boolean>true</gco:Boolean>
-                    </gmd:pass>
-                  </gmd:DQ_ConformanceResult>
-                </gmd:result>
-              </gmd:DQ_DomainConsistency>
-            </gmd:report>
-          </snippet>
-          </template>
-          </action>
-
-          <field xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope/gmd:level"/>
-
-          <action type="add" or="scope"
-                  in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality"
-                  if="count(/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope)=0">
             <template>
               <snippet>
-                <gmd:scope>
-                  <gmd:DQ_Scope>
-                    <gmd:level>
-                      <gmd:MD_ScopeCode codeListValue="service"
-                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode">
-                        servizio
-                      </gmd:MD_ScopeCode>
-                    </gmd:level>
-                    <gmd:levelDescription>
-                      <gmd:MD_ScopeDescription>
-                        <gmd:other>
-                          <gco:CharacterString>servizio</gco:CharacterString>
-                        </gmd:other>
-                      </gmd:MD_ScopeDescription>
-                    </gmd:levelDescription>
-                  </gmd:DQ_Scope>
-                </gmd:scope>
+                <gmd:report>
+                  <gmd:DQ_DomainConsistency>
+                    <gmd:result>
+                      <gmd:DQ_ConformanceResult>
+                        <gmd:specification>
+                          <gmd:CI_Citation>
+                            <gmd:title>
+                              <gmx:Anchor
+                                xlink:href="http://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-invocable"
+                                xlink:title="INSPIRE Invocable Spatial Data Services metadata">
+                                invocable
+                              </gmx:Anchor>
+                            </gmd:title>
+                            <gmd:date>
+                              <gmd:CI_Date>
+                                <gmd:date>
+                                  <gco:Date>2016-05-01</gco:Date>
+                                </gmd:date>
+                                <gmd:dateType>
+                                  <gmd:CI_DateTypeCode
+                                    codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                    codeListValue="publication"/>
+                                </gmd:dateType>
+                              </gmd:CI_Date>
+                            </gmd:date>
+                          </gmd:CI_Citation>
+                        </gmd:specification>
+                        <gmd:explanation>
+                          <gco:CharacterString>Questo servizio di dati
+                            territoriali è conforme ai requisiti INSPIRE per i Servizi di Dati Territoriali
+                            Invocabili</gco:CharacterString>
+                        </gmd:explanation>
+                        <gmd:pass>
+                          <gco:Boolean>true</gco:Boolean>
+                        </gmd:pass>
+                      </gmd:DQ_ConformanceResult>
+                    </gmd:result>
+                  </gmd:DQ_DomainConsistency>
+                </gmd:report>
               </snippet>
             </template>
           </action>
 
-
-          <field
-            xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency" del=".."/>
-
-          <action type="process"
-                  process="sds-add-qualityofservice"
-                  if="(count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[text()='availability'])=0 or
-                       count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[text()='performance'])=0 or
-                       count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[text()='capacity'])=0 )"/>
-
-          </section>
+        </section>
       </tab>
 
       <tab id="raster" mode="flat" displayIfRecord="count(gmd:MD_Metadata/gmd:contentInfo/gmd:MD_ImageDescription)>0">
@@ -3248,6 +3251,7 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
         <for name="gmd:processor"/>
         <for name="gmd:topicCategory"/>
         <for name="srv:containsOperations"/>
+        <for name="srv:SV_OperationMetadata"/>
         <for name="srv:SV_Parameter"/>
       </flatModeExceptions>
     </view>
@@ -3296,9 +3300,10 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
             </template>
 
           </action>
+
           <field xpath="/gmd:MD_Metadata/gmd:metadataStandardVersion" or="metadataStandardVersion" in="/gmd:MD_Metadata"/>
 
-          <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevel" or ="hierarchyLevel" in ="/gmd:MD_Metadata"/>
+          <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevel" name="hierarchyLevel"/>
 
           <action type="add" btnLabel="hierarchyLevel"
                   name="hierarchyLevel" or="hierarchyLevel"
@@ -3315,12 +3320,16 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
             </template>
           </action>
 
-          <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevelName" or ="hierarchyLevelName" in="/gmd:MD_Metadata"/>
+          <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevelName"
+                 name="hierarchyLevelName"/>
 
-          <action type="add" btnLabel="hierarchyLevelName"
+          <action type="add"
+                  name="hierarchyLevelName"
+                  btnLabel="hierarchyLevelName"
                   or="hierarchyLevelName"
+                  in="/gmd:MD_Metadata"
                   if="count(gmd:MD_Metadata/hierarchyLevelName) = 0"
-                  in="gmd:MD_Metadata">
+          >
             <template>
               <snippet>
                 <gmd:hierarchyLevelName>

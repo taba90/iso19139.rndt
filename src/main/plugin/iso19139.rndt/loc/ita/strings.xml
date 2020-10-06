@@ -162,7 +162,8 @@
   <responsibleParty>Responsabile dei metadati</responsibleParty>
   <responsible>Responsabile</responsible>
   <creationDate>Creation date</creationDate>
-  <hierarchyLevel>Hierarchy level</hierarchyLevel>
+  <hierarchyLevel>Livello gerarchico</hierarchyLevel>
+  <hierarchyLevelName>Nome del livello gerarchico</hierarchyLevelName>
   <publicationDate>Publication date</publicationDate>
   <revisionDate>Revision date</revisionDate>
   <temporalSection>Estensione temporale</temporalSection>
@@ -194,6 +195,9 @@
   <spatialScope> Ambito territoriale</spatialScope>
   <extent>Estensione dei dati</extent>
   <referenceSystemIdentifier>Sistema di riferimento</referenceSystemIdentifier>
+  <connectPoint>Accesso URL</connectPoint>
+  <DCP>DCP</DCP>
+ <qualityLevel>Livello di qualità</qualityLevel>
   <format>Formato</format>
   <format_version>Versione</format_version>
   <spatialResolution>Risoluzione spaziale</spatialResolution>
