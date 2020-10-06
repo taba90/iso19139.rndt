@@ -115,7 +115,7 @@
   <metadata>Metadati</metadata>
   <metadataInfo>Informazioni sui metadati</metadataInfo>
   <identificationInfo>Identificazione dei dati</identificationInfo>
-  <serviceIdentificatio>Identificazione dei servizi</serviceIdentificatio>
+  <serviceIdentification>Identificazione dei servizi</serviceIdentification>
   <serviceType>Tipo di servizio</serviceType>
   <descriptiveKeywords>Parole chiave</descriptiveKeywords>
   <keyword>Parola chiave</keyword>
@@ -240,4 +240,7 @@
   <datasetAndSeries>Dataset e serie</datasetAndSeries>
   <services>Servizi</services>
   <raster>Dati raster</raster>
+  <text>testo</text>
+  <anchor>anchor</anchor>
+  <serviceClassification>Classificazione dei servizi di dati territoriali</serviceClassification>
 </strings>
