@@ -131,7 +131,7 @@
 						</xsl:when>
 						<xsl:otherwise>
 							<xsl:value-of select="./gmd:fileIdentifier/gco:CharacterString"/>
-						</xsl:otherwise>	
+						</xsl:otherwise>
 					</xsl:choose>
 				</gco:CharacterString>
 			</gmd:parentIdentifier>
@@ -152,13 +152,13 @@
 
 	<!-- ================================================================= -->
 	<!-- Remap gml URI from /gml to /gml/3.2 -->
-     
+
     <xsl:template match="@*[namespace-uri()='http://www.opengis.net/gml']">
         <xsl:attribute name="gml:{local-name()}">
             <xsl:value-of select="."/>
         </xsl:attribute>
     </xsl:template>
-     
+
     <xsl:template match="*[namespace-uri()='http://www.opengis.net/gml']">
         <xsl:element name="gml:{local-name()}">
             <xsl:apply-templates select="node()|@*"/>
@@ -173,12 +173,12 @@
         <xsl:choose>
             <xsl:when test="$isTile">
                 <ITgmd:metadataStandardName>
-                    <gco:CharacterString>DM - Regole tecniche RNDT</gco:CharacterString>
+                    <gco:CharacterString>Linee Guida RNDT</gco:CharacterString>
                 </ITgmd:metadataStandardName>
             </xsl:when>
             <xsl:otherwise>
                 <gmd:metadataStandardName>
-                    <gco:CharacterString>DM - Regole tecniche RNDT</gco:CharacterString>
+                    <gco:CharacterString>Linee Guida RNDT</gco:CharacterString>
                 </gmd:metadataStandardName>
             </xsl:otherwise>
         </xsl:choose>
@@ -188,12 +188,12 @@
         <xsl:choose>
             <xsl:when test="$isTile">
                 <ITgmd:metadataStandardVersion>
-                    <gco:CharacterString>10 novembre 2011</gco:CharacterString>
+                    <gco:CharacterString>2.0</gco:CharacterString>
                 </ITgmd:metadataStandardVersion>
             </xsl:when>
             <xsl:otherwise>
                 <gmd:metadataStandardVersion>
-                    <gco:CharacterString>10 novembre 2011</gco:CharacterString>
+                    <gco:CharacterString>2.0</gco:CharacterString>
                 </gmd:metadataStandardVersion>
             </xsl:otherwise>
         </xsl:choose>
@@ -212,7 +212,7 @@
 
 	<!-- ================================================================= -->
 	<!-- Manage the gmd:pass -->
-	
+
 <!--	<xsl:template match="gmd:DQ_ConformanceResult">
 		<xsl:choose>
 			<xsl:when test="not(exists(gmd:pass))">
@@ -236,13 +236,13 @@
 							<xsl:text></xsl:text>
 							<xsl:attribute name="nilReason">unknown</xsl:attribute>
 						</xsl:element>
-					</xsl:copy>				    	
+					</xsl:copy>
 				</xsl:if>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>-->
-	
-	<!-- Use 'nilReason' to unknown for the pass element in un-compiled conformance	
+
+	<!-- Use 'nilReason' to unknown for the pass element in un-compiled conformance
 	<xsl:template match="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:pass">
 		<xsl:choose>
 			<xsl:when test="../gmd:explanation/gco:CharacterString='non valutato'">
@@ -258,15 +258,15 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template> -->
-	
+
 	<!-- ================================================================= -->
-	
+
 	<!-- Remove empty keywords
          1) remove parent <gmd:descriptiveKeywords> if all <gmd:MD_Keywords> are empty
          2) remove <gmd:keyword> if empty
     -->
 	<!--
-        <gmd:identificationInfo> 
+        <gmd:identificationInfo>
             <srv:SV_ServiceIdentification | gmd:MD_DataIdentification >
                 <gmd:descriptiveKeywords>   0..n, insieme di keywords da un determinato thesaurus
                     <gmd:MD_Keywords>       1..1
@@ -276,7 +276,7 @@
                     </gmd:MD_Keywords>
                 </gmd:descriptiveKeywords>
     -->
-	
+
 	<!-- Remove empty keywords 1) remove parent <gmd:descriptiveKeywords> if all <gmd:MD_Keywords> are empty -->
 
 	<xsl:template match="gmd:identificationInfo/*/gmd:descriptiveKeywords">
@@ -322,11 +322,11 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-	
+
 	<xsl:template name="extract_keywords_text">
 		<xsl:for-each select="gmd:MD_Keywords/gmd:keyword"><xsl:copy-of select="gco:CharacterString" /></xsl:for-each>
 	</xsl:template>
-	
+
 	<!-- ================================================================= -->
 	<!-- ================================================================= -->
     <!-- Templates per i tile                                              -->
@@ -424,14 +424,14 @@
 	<!-- ================================================================= -->
 
         <!-- L'harvester RNDT non riconosce l'elemento gmx:MimeFile -->
-        
+
         <!-- Disabilitare questo template nel caso in cui servano per qualche altro scopo le informazioni aggiuntive fornite da gmx:MimeFile.
              In questo caso l'eliminazione dell'elemento non riconosciuto può essere effettuata in un postprocessing XSL:
              - l'XSL presente (iso-full.xsl) effettua la maggior parte del processing, lasciando nell'output anche le informazioni aggiuntive
                non riconosciute dall'harvester del Repertorio Nazionale.
              - viene creato un servizio CSW aggiuntivo, a cui si fanno effettuare le trasformazioni finali (da MimeType a CharacterString)
         -->
-         
+
         <xsl:template match="gmx:MimeFileType">
             <gco:CharacterString><xsl:value-of select="text()"/></gco:CharacterString>
         </xsl:template>
