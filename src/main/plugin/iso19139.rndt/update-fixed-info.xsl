@@ -362,6 +362,7 @@
 
     </xsl:template>
 
+
     <!-- ================================================================= -->
 
     <xsl:template match="gmd:metadataStandardVersion" priority="10">

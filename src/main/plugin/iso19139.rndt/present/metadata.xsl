@@ -12,7 +12,7 @@
                 exclude-result-prefixes="gmd gco gml gts srv xlink exslt geonet">
 
     <xsl:import href="metadata-fop.xsl"/>
-    <xsl:include href="metadata-rndt.xsl"/>
+    <xsl:include href="metadata.xsl"/>
     <xsl:include href="metadata-view.xsl"/>
     <xsl:include href="metadata-ovr.xsl"/>
 
@@ -244,6 +244,76 @@
       <xsl:with-param name="text" select="'service'"/>
     </xsl:apply-templates>
     </xsl:if>
+  </xsl:template>
+
+  <xsl:template mode="iso19139" match="gmd:hierarchyLevelName" priority="200">
+    <xsl:param name="schema"/>
+    <xsl:param name="edit"/>
+
+    <xsl:apply-templates mode="simpleElement" select=".">
+      <xsl:with-param name="schema"  select="$schema"/>
+      <xsl:with-param name="edit"    select="false()"/>
+      <xsl:with-param name="text">
+        <xsl:choose>
+          <xsl:when test="string-join(gco:*, '')=''">
+            <span class="info">
+              - <xsl:value-of select="/root/gui/strings/setOnSave"/> -
+            </span>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="gco:*"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:with-param>
+    </xsl:apply-templates>
+  </xsl:template>
+
+  <xsl:template mode="iso19139" match="gmd:hierarchyLevel" priority="200">
+    <xsl:param name="schema"/>
+    <xsl:param name="edit"/>
+    <xsl:if test="gmd:MD_ScopeCode/@codeListValue='service'">
+    <xsl:apply-templates mode="simpleElement" select=".">
+      <xsl:with-param name="schema"  select="$schema"/>
+      <xsl:with-param name="edit"    select="false()"/>
+      <xsl:with-param name="text">
+        <xsl:choose>
+          <xsl:when test="string-join(gco:*, '')=''">
+            <span class="info">
+              - <xsl:value-of select="/root/gui/strings/setOnSave"/> -
+            </span>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="gco:*"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:with-param>
+    </xsl:apply-templates>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template mode="iso19139" match="gmd:language" priority="2">
+    <xsl:param name="schema"/>
+    <xsl:param name="edit"/>
+     <xsl:variable name="text">
+          <xsl:variable name="language" select="gmd:language/gmd:LanguageCode"/>
+
+          <input type="text" class="md" name="_{$ref}" id="_{$ref}"
+                 value="{gmd:LanguageCode}" size="30"/>
+
+          <xsl:for-each select="gmd:LanguageCode">
+            <xsl:call-template name="helper">
+              <xsl:with-param name="schema" select="$schema"/>
+              <xsl:with-param name="attribute" select="false()"/>
+            </xsl:call-template>
+          </xsl:for-each>
+
+        </xsl:variable>
+
+        <xsl:apply-templates mode="simpleElement" select=".">
+          <xsl:with-param name="schema" select="$schema"/>
+          <xsl:with-param name="edit" select="true()"/>
+          <xsl:with-param name="text" select="$text"/>
+        </xsl:apply-templates>
   </xsl:template>
 
 </xsl:stylesheet>

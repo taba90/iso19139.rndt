@@ -71,12 +71,12 @@
   </xsl:template>
 
   <!-- Date type is handled in next template -->
-  <xsl:template mode="mode-iso19139.rndt" match="gmd:dateType" priority="4000"/>
+  <xsl:template mode="mode-iso19139" match="gmd:dateType" priority="4000"/>
 
   <!-- Rendering date type as a dropdown to select type
   and the calendar next to it.
   -->
-  <xsl:template mode="mode-iso19139.rndt"
+  <xsl:template mode="mode-iso19139"
                 priority="2000"
                 match="gmd:CI_Date/gmd:date">
     <xsl:param name="schema" select="$schema" required="no"/>
@@ -172,7 +172,7 @@
   Date with not date type.
    eg. editionDate
   -->
-  <xsl:template mode="mode-iso19139.rndt"
+  <xsl:template mode="mode-iso19139"
                 priority="2000"
                 match="*[(gco:Date|gco:DateTime) and not(../gmd:dateType)]">
     <xsl:param name="schema" select="$schema" required="no"/>
