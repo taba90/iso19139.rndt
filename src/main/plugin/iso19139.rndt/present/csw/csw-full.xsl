@@ -29,42 +29,15 @@
 
     <xsl:variable name="isSrv" select="boolean(//srv:*)"/>
 
-    <xsl:variable name="isTile" select="boolean(//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue='tile')"/>
 
 	<!-- ================================================================= -->
 
 	<!-- Generic node -->
 
     <xsl:template match="/">
-        <!--<xsl:message>============ ISTILE <xsl:value-of select="$isTile"/></xsl:message>-->
-
-        <xsl:choose>
-            <xsl:when test="$isTile">
-                <!-- I tile hanno un envelope Request esterno -->
-                <ITgmd:Request
-                               xmlns:ITgmd="http://www.cnipa.gov.it/RNDT/ITgmd"
-                               xmlns:gmd="http://www.isotc211.org/2005/gmd"
-                               xmlns:gco="http://www.isotc211.org/2005/gco"
-                               xmlns:gsr="http://www.isotc211.org/2005/gsr"
-                               xmlns:gss="http://www.isotc211.org/2005/gss"
-                               xmlns:gts="http://www.isotc211.org/2005/gts"
-                               xmlns:gml="http://www.opengis.net/gml/3.2"
-                               xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <ITgmd:Update_RNDT domain="nazionale">
-                        <ITgmd:DS_Tile>
-                            <ITgmd:tileMetadata>
-                                <xsl:apply-templates select="node()" mode="tile"/>
-                            </ITgmd:tileMetadata>
-                        </ITgmd:DS_Tile>
-                    </ITgmd:Update_RNDT>
-                </ITgmd:Request>
-            </xsl:when>
-            <xsl:otherwise>
                 <xsl:copy copy-namespaces="no">
                     <xsl:apply-templates select="node()"/>
                 </xsl:copy>
-            </xsl:otherwise>
-        </xsl:choose>
     </xsl:template>
 
 
@@ -169,35 +142,17 @@
 
 	<!-- Replace RNDT metadata standard name/version -->
 
-	<xsl:template match="gmd:metadataStandardName">
-        <xsl:choose>
-            <xsl:when test="$isTile">
-                <ITgmd:metadataStandardName>
-                    <gco:CharacterString>Linee Guida RNDT</gco:CharacterString>
-                </ITgmd:metadataStandardName>
-            </xsl:when>
-            <xsl:otherwise>
-                <gmd:metadataStandardName>
-                    <gco:CharacterString>Linee Guida RNDT</gco:CharacterString>
-                </gmd:metadataStandardName>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
+  <xsl:template match="gmd:metadataStandardName">
+    <gmd:metadataStandardName>
+      <gco:CharacterString>Linee Guida RNDT</gco:CharacterString>
+    </gmd:metadataStandardName>
+  </xsl:template>
 
-	<xsl:template match="gmd:metadataStandardVersion">
-        <xsl:choose>
-            <xsl:when test="$isTile">
-                <ITgmd:metadataStandardVersion>
-                    <gco:CharacterString>2.0</gco:CharacterString>
-                </ITgmd:metadataStandardVersion>
-            </xsl:when>
-            <xsl:otherwise>
-                <gmd:metadataStandardVersion>
-                    <gco:CharacterString>2.0</gco:CharacterString>
-                </gmd:metadataStandardVersion>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
+  <xsl:template match="gmd:metadataStandardVersion">
+    <gmd:metadataStandardVersion>
+      <gco:CharacterString>2.0</gco:CharacterString>
+    </gmd:metadataStandardVersion>
+  </xsl:template>
 
 	<!-- ================================================================= -->
 
@@ -290,17 +245,12 @@
 			<xsl:when test="not(string($concatkw))">
 				<xsl:comment>descriptiveKeywords vuota</xsl:comment>
 			</xsl:when>
-            <xsl:when test="$isTile">
-                <ITgmd:descriptiveKeywords>
-					<xsl:apply-templates select="@*|node()"/>
-                </ITgmd:descriptiveKeywords>
-            </xsl:when>
 			<xsl:otherwise>
                 <xsl:copy copy-namespaces="no">
 					<xsl:apply-templates select="@*|node()"/>
 				</xsl:copy>
-			</xsl:otherwise>
-		</xsl:choose>
+      </xsl:otherwise>
+    </xsl:choose>
 	</xsl:template>
 
 	<!-- Remove empty keywords 2) remove <gmd:keyword> if empty -->
@@ -310,11 +260,6 @@
 			<xsl:when test="not(string(gco:CharacterString))">
 				<xsl:comment>Keyword vuota</xsl:comment>
 			</xsl:when>
-<!--            <xsl:when test="$isTile">
-                <ITgmd:keyword>
-					<xsl:apply-templates select="@*|node()"/>
-                </ITgmd:keyword>
-            </xsl:when>-->
 			<xsl:otherwise>
                 <xsl:copy copy-namespaces="no">
 					<xsl:apply-templates select="@*|node()"/>
@@ -361,33 +306,15 @@
     <!-- remap generic gmd elements in tile metadata -->
 
     <xsl:template match="@*[namespace-uri()='http://www.isotc211.org/2005/gmd']">
-        <xsl:choose>
-            <xsl:when test="$isTile">
-                <xsl:attribute name="ITgmd:{local-name()}">
-                    <xsl:value-of select="."/>
-                </xsl:attribute>
-            </xsl:when>
-            <xsl:otherwise>
                 <xsl:attribute name="{name()}">
                     <xsl:value-of select="."/>
                 </xsl:attribute>
-            </xsl:otherwise>
-        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="*[namespace-uri()='http://www.isotc211.org/2005/gmd' and name()!= 'gmd:MD_Metadata'] ">
-        <xsl:choose>
-            <xsl:when test="$isTile">
-                <xsl:element name="ITgmd:{local-name()}">
-                    <xsl:apply-templates select="node()|@*"/>
-                </xsl:element>
-            </xsl:when>
-            <xsl:otherwise>
                 <xsl:copy copy-namespaces="no">
                     <xsl:apply-templates select="node()|@*"/>
                 </xsl:copy>
-            </xsl:otherwise>
-        </xsl:choose>
     </xsl:template>
 
     <!-- These elements do not need namespace conversion -->

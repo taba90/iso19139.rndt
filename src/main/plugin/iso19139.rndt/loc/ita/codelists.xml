@@ -30,33 +30,6 @@
 		</entry>
 	</codelist>
 
-  <codelist name="PriorityDataset">
-    <entry>
-      <code>creation</code>
-      <label>Creazione</label>
-      <description>Data che identifica quando la risorsa è stata creata</description>
-    </entry>
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
-      <code>publication</code>
-      <label>Pubblicazione</label>
-      <description>Data che identifica quando la risorsa è stata pubblicata</description>
-    </entry>
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
-      <code>revision</code>
-      <label>Revisione</label>
-      <description>Data che identifica quando la risorsa è stata esaminata o
-        riesaminata e migliorata o emendata
-      </description>
-    </entry>
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <entry>
-      <code>rilievo</code>
-      <label>Rilievo</label>
-      <description>Data che identifica l’osservazione del fenomeno (es. volo)</description>
-    </entry>
-  </codelist>
 	<!-- ==================================================== -->
 	<!-- RNDT -->
 	<codelist name="gmd:MD_DimensionNameTypeCode">

@@ -345,16 +345,21 @@
     <xsl:template match="gmd:metadataStandardName" priority="10">
       <xsl:choose>
         <xsl:when test="exists(./gco:CharacterString)">
-          <xsl:if test="./gco:CharacterString='' or ./gco:CharacterString !='Linee Guida RNDT'">
+          <xsl:choose>
+          <xsl:when test="./gco:CharacterString='' or ./gco:CharacterString !='Linee Guida RNDT'">
             <xsl:copy>
               <gco:CharacterString>Linee Guida RNDT</gco:CharacterString>
             </xsl:copy>
-          </xsl:if>
+          </xsl:when>
+            <xsl:otherwise>
+              <xsl:copy-of select="."/>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:if test="./gmx:Anchor='' or ./gmx:Anchor !='Linee Guida RNDT'">
+          <xsl:if test="exists(./gmx:Anchor)">
             <xsl:copy>
-              <gmx:Anchor xlink:href="https://registry.geodati.gov.it/document/lgrndt">Linee Guida RNDT</gmx:Anchor>
+              <gco:CharacterString>Linee Guida RNDT</gco:CharacterString>
             </xsl:copy>
           </xsl:if>
         </xsl:otherwise>
@@ -366,11 +371,16 @@
     <!-- ================================================================= -->
 
     <xsl:template match="gmd:metadataStandardVersion" priority="10">
-      <xsl:if test="./gco:CharacterString='' or ./gco:CharacterString != '2.0'">
+      <xsl:choose>
+      <xsl:when test="./gco:CharacterString='' or ./gco:CharacterString != '2.0'">
         <xsl:copy>
           <gco:CharacterString>2.0</gco:CharacterString>
         </xsl:copy>
-      </xsl:if>
+      </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="."/>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
 
     <!-- ================================================================= -->
@@ -386,13 +396,18 @@
   </xsl:template>
 
   <xsl:template match="gmd:hierarchyLevel" priority="10">
-    <xsl:if test="exists(../gmd:identificationInfo/srv:SV_ServiceIdentification)">
+    <xsl:choose>
+      <xsl:when test="exists(../gmd:identificationInfo/srv:SV_ServiceIdentification)">
         <gmd:hierarchyLevel>
-      <gmd:MD_ScopeCode
-        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
-        codeListValue="service">service</gmd:MD_ScopeCode>
-    </gmd:hierarchyLevel>
-    </xsl:if>
+          <gmd:MD_ScopeCode
+            codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
+            codeListValue="service">service</gmd:MD_ScopeCode>
+        </gmd:hierarchyLevel>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- ================================================================= -->
@@ -766,14 +781,14 @@
 						<gco:CharacterString>Dato pubblico</gco:CharacterString>
 					</gmd:otherConstraints>-->
 
-    <xsl:template match="gmd:resourceConstraints[.//gmd:MD_RestrictionCode/@codeListValue='datoPubblico']">
+    <!--xsl:template match="gmd:resourceConstraints[.//gmd:MD_RestrictionCode/@codeListValue='datoPubblico']">
         <xsl:copy>
             <xsl:apply-templates select="@*|node()" mode="datoPubblico"/>
         </xsl:copy>
-    </xsl:template>
+    </xsl:template-->
 
        <!-- forza otherConstraints a Dato pubblico, che esista o no -->
-    <xsl:template match="gmd:MD_LegalConstraints" mode="datoPubblico">
+    <!--xsl:template match="gmd:MD_LegalConstraints" mode="datoPubblico">
         <xsl:copy>
             <xsl:apply-templates select="child::* except (gmd:otherConstraints)" mode="datoPubblico"/>
 
@@ -782,21 +797,21 @@
             </gmd:otherConstraints>
         </xsl:copy>
 
-    </xsl:template>
+    </xsl:template-->
 
        <!-- replace MD_RestrictionCode codeListValue-->
-    <xsl:template match="gmd:MD_RestrictionCode[@codeListValue='datoPubblico']" mode="datoPubblico">
+    <!--xsl:template match="gmd:MD_RestrictionCode[@codeListValue='datoPubblico']" mode="datoPubblico">
         <gmd:MD_RestrictionCode
             codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
             codeListValue="otherRestrictions">otherRestrictions"</gmd:MD_RestrictionCode>
-    </xsl:template>
+    </xsl:template-->
 
        <!-- copy everything else as is -->
-    <xsl:template match="@*|node()" mode="datoPubblico">
+    <!--xsl:template match="@*|node()" mode="datoPubblico">
         <xsl:copy>
             <xsl:apply-templates select="@*|node()" mode="datoPubblico"/>
         </xsl:copy>
-    </xsl:template>
+    </xsl:template-->
 
     <!-- ================================================================= -->
     <!-- setup the CRS info -->

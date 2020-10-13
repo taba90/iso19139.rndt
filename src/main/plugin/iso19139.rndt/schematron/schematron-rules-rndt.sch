@@ -130,8 +130,7 @@ temporalSamplingService;temporalProximityAnalysisService;metadataProcessingServi
 		<sch:title>$loc/strings/M5</sch:title>
 		<sch:rule context="//gmd:MD_Metadata">
 			<sch:assert test="(gmd:metadataStandardName/gco:CharacterString and
-			gmd:metadataStandardName/gco:CharacterString = 'Linee Guida RNDT'")
-			 or (gmd:metadataStandardName/gmx:Anchor and gmd:metadataStandardName/gmx:Anchor = 'Linee Guida RNDT'")>
+			gmd:metadataStandardName/gco:CharacterString = 'Linee Guida RNDT')">
 			 $loc/strings/alert.M5
 			 </sch:assert>
 			<!--			<sch:assert test="gmd:metadataStandardName/gco:CharacterString and contains(gmd:metadataStandardName/gco:CharacterString,'DM - Regole tecniche RNDT')">$loc/strings/alert.M5</sch:assert>-->

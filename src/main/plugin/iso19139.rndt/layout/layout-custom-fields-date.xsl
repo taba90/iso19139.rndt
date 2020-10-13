@@ -137,7 +137,8 @@
              data-label=""
              data-element-name="{name(gco:Date|gco:DateTime)}"
              data-element-ref="{concat('_X', gn:element/@ref)}"
-             data-hide-time="{if ($viewConfig/@hideTimeInCalendar = 'true') then 'true' else 'false'}">
+             data-hide-time="{if ($viewConfig/@hideTimeInCalendar = 'true') then 'true' else 'false'}"
+             data-date-time-supported="'false">
         </div>
 
 
@@ -174,14 +175,13 @@
   -->
   <xsl:template mode="mode-iso19139"
                 priority="2000"
-                match="*[(gco:Date|gco:DateTime) and not(../gmd:dateType)]">
+                match="*[(gco:Date|gco:DateTime)]">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
     <xsl:param name="overrideLabel" select="''" required="no"/>
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="tooltip" select="concat($schema, '|', name(.), '|', name(..), '|', $xpath)"/>
-    <xsl:message> Sto editando le date <xsl:value-of select="$tooltip"/></xsl:message>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
     <xsl:variable name="labelConfig"
                   select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>

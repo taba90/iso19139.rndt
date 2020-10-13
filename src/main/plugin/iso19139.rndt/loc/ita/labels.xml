@@ -27,35 +27,28 @@
 		<condition>Obbligatorio</condition>
 		<help>Testo libero. Da evitare abbreviazioni.</help>
 	</element>
-
-  <element name="gmd:LanguageCode">
-    <label>Codice lingua</label>
-
-    <description>Elenco dei codici per le 24 lingue ufficiali della UE</description>
-    <helper>
-      <option value="bul" >Bulgaro</option>
-      <option value="cze" >Ceco</option>
-      <option value="hrv" >Croato</option>
-      <option value="dan" >Danese</option>
-      <option value="est" >Estone</option>
-      <option value="fin" >Finlandese</option>
-      <option value="Francese" >fre</option>
-      <option value="gre" >Greco</option>
-      <option value="eng" >Inglese</option>
-      <option value="gle" >Irlandese</option>
-      <option value="ita" >Italiano</option>
-      <option value="lav" >Lettone</option>
-      <option value="lit" >Lituano</option>
-      <option value="dut" >Olandese</option>
-      <option value="pol" >Polacco</option>
-      <option value="por" >Portoghese</option>
-      <option value="rum" >Rumeno</option>
-      <option value="slo" >Slovacco</option>
-      <option value="slv" >Sloveno</option>
-      <option value="spa" >Spagnolo</option>
-      <option value="swe" >Svedese</option>
-      <option value="ger" >Tedesco</option>
-      <option value="hun" >Ungherese</option>
+  <element name="gmd:name" context="gmd:MD_Format" id="285.0">
+    <label>Nome</label>
+    <description>Nome formato</description>
+    <help>Nome del formato dei dati</help>
+    <condition>obbligatorio</condition>
+    <helper rel="gmd:version">
+      <option value="Text">Testo</option>
+      <option value="ESRI Shapefile" title="1.0">ESRI Shapefile</option>
+      <option value="Mapinfo MIF/MID" title="4.5">Mapinfo MIF/MID</option>
+      <option value="Mapinfo TAB">Mapinfo TAB</option>
+      <option value="KML">KML</option>
+      <option value="GML" title="3.2.1">GML</option>
+      <option value="GeoTIFF" title="1.0">GeoTIFF</option>
+      <option value="TIFF">TIFF</option>
+      <option value="ECW">ECW</option>
+      <option value="JPEG2000">JPEG2000</option>
+      <option value="ZIP">ZIP</option>
+      <option value="PDF">PDF</option>
+      <option value="PNG">PNG</option>
+      <option value="JPEG">JPEG</option>
+      <option value="OGC:WMC">OGC:WMC</option>
+      <option value="OGC:OWS Context">OGC:OWS Context</option>
     </helper>
   </element>
 
@@ -136,7 +129,7 @@
 		<help>Può essere inserita alternativamente al 'Sito web'</help>
 	</element>
 	<element name="gmd:name" context="gmd:MD_Format">
-		<label>Name formato</label>
+		<label>Nome formato</label>
 		<description>Formato di distribuzione</description>
 		<condition>Obbligatorio</condition>
 	</element>
