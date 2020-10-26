@@ -1192,37 +1192,36 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
 
         <section name="metadataInfo">
 
-          <field name="hierarchyLevel" xpath="/gmd:MD_Metadata/gmd:hierarchyLevel" or ="hierarchyLevel" in ="/gmd:MD_Metadata" templateModeOnly="true">
-            <template>
-              <values>
-                <key label="hierarchyLevel" xpath="gmd:MD_ScopeCode/@codeListValue">
-                  <codelist name="gmd:MD_ScopeCode"/>
-                </key>
-              </values>
-              <snippet>
-                <gmd:hierarchyLevel>
-                  <gmd:MD_ScopeCode
-                    codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
-                    codeListValue="{{hierarchyLevel}}"/>
-                </gmd:hierarchyLevel>
-              </snippet>
-            </template>
-          </field>
+        <field name="hierarchyLevel" xpath="/gmd:MD_Metadata/gmd:hierarchyLevel/gmd:MD_ScopeCode" templateModeOnly="true" notDisplayedIfMissing="true">
+          <template>
+            <values>
+              <key label="scopeCode" xpath="@codeListValue">
+                <codelist name="gmd:MD_ScopeCode"/>
+              </key>
+            </values>
+            <snippet>
+              <gmd:MD_ScopeCode
+                codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
+                codeListValue="{{scopeCode}}"/>
+            </snippet>
+          </template>
+        </field>
 
 
-          <action type="add" btnLabel="hierarchyLevel"
-                  name="hierarchyLevel" or="hierarchyLevel"
-                  in="/gmd:MD_Metadata">
-            <template>
-              <snippet>
-                <gmd:hierarchyLevel>
-                  <gmd:MD_ScopeCode
-                    codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
-                    codeListValue="dataset"/>
-                </gmd:hierarchyLevel>
-              </snippet>
-            </template>
-          </action>
+        <action type="add" btnLabel="hierarchyLevel"
+                name="hierarchyLevel" or="hierarchyLevel"
+                in="/gmd:MD_Metadata">
+          <template>
+            <snippet>
+              <gmd:hierarchyLevel>
+                <gmd:MD_ScopeCode
+                  codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
+                  codeListValue="dataset"/>
+              </gmd:hierarchyLevel>
+            </snippet>
+          </template>
+        </action>
+
         </section>
 
         <section name="identificationInfo">
