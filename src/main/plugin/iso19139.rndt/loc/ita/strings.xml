@@ -71,6 +71,7 @@
   <qualityInfo>Informazioni sulla qualità</qualityInfo>
   <servicesQualityInfo>Qualità dei servizi</servicesQualityInfo>
   <dataQualityInfo>Qualità dei dati</dataQualityInfo>
+  <dataQuality>Informazioni sulla qualità</dataQuality>
   <dataQualityLevel>Livello di qualità</dataQualityLevel>
   <axisDimensionProperties>Proprietà dimensioni</axisDimensionProperties>
   <referenceSystemInfo>Sistema di riferimento</referenceSystemInfo>
@@ -211,4 +212,9 @@
   <name>Nome</name>
   <URL>URL</URL>
   <hierarchyLevel>Livello gerarchico</hierarchyLevel>
+  <nameOfMeasure>Nome della misura</nameOfMeasure>
+  <evaluationMethodType>Metodo di valutazione</evaluationMethodType>
+  <evaluationMethodDescr>Descrizione del metodo di valutazione</evaluationMethodDescr>
+  <valueUnit>Unità di misura</valueUnit>
+  <topologicalRecord>Valore</topologicalRecord>
 </strings>
