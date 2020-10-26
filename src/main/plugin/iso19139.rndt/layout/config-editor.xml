@@ -2135,7 +2135,8 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
             <action type="add"
                     btnLabel="positionalAccuracy"
                     or="report"
-                    in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
+                    in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality"
+                    if="count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy/gmd:result)=0">
               <template>
                 <snippet>
                   <gmd:report>
@@ -4409,7 +4410,9 @@ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabi
             <action type="add"
                     btnLabel="positionalAccuracy"
                     or="report"
-                    in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
+                    in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality"
+                    if="count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy/gmd:result)=0"
+            >
               <template>
                 <snippet>
                   <gmd:report>
