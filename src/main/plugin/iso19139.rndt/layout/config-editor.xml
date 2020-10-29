@@ -630,7 +630,6 @@
             -->
             <action type="add"
                     btnLabel="bnt_test"
-                    directive="data-gn-thesaurus-selector"
                     name="gmd:descriptiveKeywords"
                     or="descriptiveKeywords"
                     in="/gmd:MD_Metadata/gmd:identificationInfo/*"
@@ -808,7 +807,6 @@
                      [gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions'
                      and (boolean(not(gmd:MD_LegalConstraints/gmd:otherConstraints) or gmd:MD_LegalConstraints/gmd:otherConstraints[contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAccess')]))]"
                 del="."
-                name="accessConstraint"
               />
 
 
@@ -816,7 +814,6 @@
                 xpath="gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints
                      [boolean(gmd:MD_LegalConstraints/gmd:accessConstraints) and not(gmd:MD_LegalConstraints/gmd:otherConstraints)]"
                 del="."
-                name="accessConstraint"
               />
 
               <!--field
@@ -863,9 +860,8 @@
               <field
                 xpath="gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints
                      [gmd:MD_LegalConstraints/*/gmd:MD_RestrictionCode/@codeListValue ='otherRestrictions'
-                     and not(gmd:MD_LegalConstraints/gmd:otherConstraints[contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAccess')])]"
-                name="useConstraint"
-                del=".."/>
+                     and not(gmd:MD_LegalConstraints[boolean(gmd:otherConstraints) and contains(gmd:otherConstraints/gmx:Anchor/@xlink:href, 'LimitationsOnPublicAccess')])]"
+                del="."/>
 
               <!--field
                 xpath="gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[../*/gmd:MD_RestrictionCode/@codeListValue ='otherRestrictions' and
@@ -1485,25 +1481,25 @@
                      del="../.."
               />
 
-              <action type="add"
-                      btnLabel="openData"
-                      or="descriptiveKeywords"
-                      in="/gmd:MD_Metadata/gmd:identificationInfo/*"
-                      if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords
+            <action type="add"
+                    btnLabel="openData"
+                    or="descriptiveKeywords"
+                    in="/gmd:MD_Metadata/gmd:identificationInfo/*"
+                    if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords
                               [gmd:keyword='open data' or gmd:keyword='opendata'])=0"
-              >
-                <template>
-                  <snippet>
-                    <gmd:descriptiveKeywords>
-                      <gmd:MD_Keywords>
-                        <gmd:keyword>
-                          <gco:CharacterString>opendata</gco:CharacterString>
-                        </gmd:keyword>
-                      </gmd:MD_Keywords>
-                    </gmd:descriptiveKeywords>
-                  </snippet>
-                </template>
-              </action>
+            >
+              <template>
+                <snippet>
+                  <gmd:descriptiveKeywords>
+                    <gmd:MD_Keywords>
+                      <gmd:keyword>
+                        <gco:CharacterString>opendata</gco:CharacterString>
+                      </gmd:keyword>
+                    </gmd:MD_Keywords>
+                  </gmd:descriptiveKeywords>
+                </snippet>
+              </template>
+            </action>
 
             </section>
 
@@ -3224,49 +3220,9 @@
 
 
         <section name="dataDistribution" displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
-          <field templateModeOnly="true" notDisplayedIfMissing="true" name="onlineResource"
-                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions"
-                 del="..">
-            <template>
-              <values>
-                <key label="URL" xpath="gmd:online/gmd:CI_OnlineResource/gmd:linkage/gmd:URL" tooltip="gmd:linkage" />
-                <key label="protocol" xpath="gmd:online/gmd:CI_OnlineResource/gmd:protocol" tooltip="gmd:protocol">
-                  <helper name="gmd:protocol"/>
-                </key>
-                <key label="name" xpath="gmd:online/gmd:CI_OnlineResource/gmd:name/gco:CharacterString"/>
-                <key label="description" xpath="gmd:online/gmd:CI_OnlineResource/gmd:description">
-                  <helper name="gmd:description" context="gmd:CI_OnlineResource"/>
-                </key>
-                <key label="function"
-                     xpath="gmd:online/gmd:OnLineFunctionCode/@codeListValue">
-                  <codelist name="gmd:CI_OnLineFunctionCode"/>
-                </key>
-              </values>
-              <snippet>
-                <gmd:onLine>
-                  <gmd:CI_OnlineResource>
-                    <gmd:linkage>
-                      <gmd:URL>{{URL}}</gmd:URL>
-                    </gmd:linkage>
-                    <gmd:protocol>
-                        {{protocol}}
-                    </gmd:protocol>
-                    <gmd:name>
-                      <gco:CharacterString>{{name}}</gco:CharacterString>
-                    </gmd:name>
-                    <gmd:description>
-                        {{description}}
-                    </gmd:description>
-                    <gmd:function>
-                      <gmd:CI_OnLineFunctionCode
-                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="{{functionCode}}">
-                      </gmd:CI_OnLineFunctionCode>
-                    </gmd:function>
-                  </gmd:CI_OnlineResource>
-                </gmd:onLine>
-              </snippet>
-            </template>
-          </field>
+          <field name="onlineResource"
+                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions"
+                 del="."/>
 
           <action type="add" name="onlineResource" or="transferOptions" btnLabel="transferOption"
                   in="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution">
@@ -3283,10 +3239,6 @@
                           <gmx:Anchor
                             xlink:href=""/>
                         </gmd:protocol>
-                        <gmd:applicationProfile>
-                          <gmx:Anchor
-                            xlink:href=""/>
-                        </gmd:applicationProfile>
                         <gmd:name>
                           <gco:CharacterString/>
                         </gmd:name>
