@@ -1344,9 +1344,7 @@
 
 
             <section name="keyword_interesse_generale" >
-               <!-- <gco:CharacterString>Registro dei dati di interesse generale per il RNDT</gco:CharacterString> -->
 
-               <!-- gestisce campo ed eliminazione quando ci sono più elementi -->
                 <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString,'Registro dei dati di interesse generale per il RNDT')]"
                        del="."
                        if ="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString,'Registro dei dati di interesse generale per il RNDT')])>0"
