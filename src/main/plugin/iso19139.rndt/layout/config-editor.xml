@@ -1483,7 +1483,6 @@
 
             <section name="keyword_opendata" >
 
-              <!-- todo: il delete non funziona -->
               <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword
                         [gco:CharacterString/text()='open data' or gco:CharacterString/text()='opendata']"
                      del="../.."
