@@ -64,55 +64,35 @@
 
   </xsl:template>
 
-  <xsl:template mode="mode-iso19139" match="gmd:resourceConstraints[not(gmd:MD_Constraints)]">
+  <xsl:template mode="mode-iso19139" match="gmd:resourceConstraints[not(gmd:MD_Constraints) and boolean(gmd:MD_LegalConstraints/*/gmx:Anchor)]">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
     <xsl:param name="refToDelete" required="no"/>
     <xsl:param name="overrideLabel" required="no"/>
     <xsl:for-each select="gmd:MD_LegalConstraints/*">
-      <xsl:choose>
-        <xsl:when test="./name()='gmd:otherConstraints'">
-          <xsl:variable name="thesaurusId">
-            <xsl:choose>
-              <xsl:when test="boolean(../gmd:useConstraints)">
-                <xsl:text>httpinspireeceuropaeumetadatacodelistConditionsApplyingToAccessAndUse-ConditionsApplyingToAccessAndUse.rdf</xsl:text>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:text>httpinspireeceuropaeumetadatacodelistLimitationsOnPublicAccess-LimitationsOnPublicAccess.rdf</xsl:text>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:variable>
+        <xsl:if test="./name()='gmd:otherConstraints' and boolean(./gmx:Anchor) and boolean(../gmd:accessConstraints)">
+          <xsl:variable name="thesaurusId" select="'httpinspireeceuropaeumetadatacodelistLimitationsOnPublicAccess-LimitationsOnPublicAccess.rdf'"/>
           <xsl:call-template name="iso19139.rndt-select">
             <xsl:with-param name="thesaurusId" select="$thesaurusId"/>
             <xsl:with-param name="currElement" select="."/>
             <xsl:with-param name="refToDelete" select="$refToDelete"/>
             <xsl:with-param name="schema" select="$schema"/>
             <xsl:with-param name="labels" select="$labels"/>
+            <xsl:with-param name="lang" select="'it'"/>
           </xsl:call-template>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates mode="mode-iso19139" select=".">
-            <xsl:with-param name="schema" select="$schema"/>
-            <xsl:with-param name="labels" select="$labels"/>
-            <xsl:with-param name="refToDelete" select="$refToDelete"/>
-            <xsl:with-param name="overrideLabel" select="$overrideLabel"/>
-          </xsl:apply-templates>
-        </xsl:otherwise>
-      </xsl:choose>
+        </xsl:if>
+      <xsl:if test="./name()='gmd:otherConstraints' and boolean(./gmx:Anchor) and boolean(../gmd:useConstraints)">
+        <xsl:variable name="thesaurusId" select="'httpinspireeceuropaeumetadatacodelistConditionsApplyingToAccessAndUse-ConditionsApplyingToAccessAndUse.rdf'"/>
+        <xsl:call-template name="iso19139.rndt-select">
+          <xsl:with-param name="thesaurusId" select="$thesaurusId"/>
+          <xsl:with-param name="currElement" select="."/>
+          <xsl:with-param name="refToDelete" select="$refToDelete"/>
+          <xsl:with-param name="schema" select="$schema"/>
+          <xsl:with-param name="labels" select="$labels"/>
+          <xsl:with-param name="lang" select="'it'"/>
+        </xsl:call-template>
+      </xsl:if>
     </xsl:for-each>
-  </xsl:template>
-
-  <xsl:template mode="mode-iso19139" match="gmd:accessConstraints|gmd:useConstraints">
-    <xsl:param name="schema" select="$schema" required="no"/>
-    <xsl:param name="labels" select="$labels" required="no"/>
-    <xsl:param name="refToDelete" required="no"/>
-    <xsl:param name="overrideLabel" required="no"/>
-    <xsl:apply-templates mode="mode-iso19139" select="*">
-      <xsl:with-param name="schema" select="$schema"/>
-      <xsl:with-param name="labels" select="$labels"/>
-      <xsl:with-param name="refToDelete" select="$refToDelete"/>
-      <xsl:with-param name="overrideLabel" select="$overrideLabel"/>
-    </xsl:apply-templates>
   </xsl:template>
 
   <xsl:template mode="mode-iso19139" match="gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">
@@ -123,31 +103,34 @@
     <xsl:variable name="isService" select="boolean(../../../../../../gmd:identificationInfo/srv:SV_ServiceIdentification)"/>
     <xsl:for-each select="*">
       <xsl:choose>
-        <xsl:when test="./name()='gmd:protocol'">
+        <xsl:when test="./name()='gmd:protocol' and boolean(./gmx:Anchor)">
           <xsl:call-template name="iso19139.rndt-select">
             <xsl:with-param name="thesaurusId" select="'httpinspireeceuropaeumetadatacodelistProtocolValue-ProtocolValue.rdf'"/>
             <xsl:with-param name="currElement" select="."/>
             <xsl:with-param name="refToDelete" select="$refToDelete"/>
             <xsl:with-param name="schema" select="$schema"/>
             <xsl:with-param name="labels" select="$labels"/>
+            <xsl:with-param name="lang" select="'it'"/>
           </xsl:call-template>
         </xsl:when>
-        <xsl:when test="./name()='gmd:applicationProfile' and not($isService)">
+        <xsl:when test="./name()='gmd:applicationProfile' and not($isService) and boolean(./gmx:Anchor)">
           <xsl:call-template name="iso19139.rndt-select">
             <xsl:with-param name="thesaurusId" select="'httpinspireeceuropaeumetadatacodelistSpatialDataServiceType-SpatialDataServiceType.rdf'"/>
             <xsl:with-param name="currElement" select="."/>
             <xsl:with-param name="refToDelete" select="$refToDelete"/>
             <xsl:with-param name="schema" select="$schema"/>
             <xsl:with-param name="labels" select="$labels"/>
+            <xsl:with-param name="lang" select="'it'"/>
           </xsl:call-template>
         </xsl:when>
-        <xsl:when test="./name()='gmd:description'">
+        <xsl:when test="./name()='gmd:description' and boolean(./gmx:Anchor)">
           <xsl:call-template name="iso19139.rndt-select">
             <xsl:with-param name="thesaurusId" select="'httpinspireeceuropaeumetadatacodelistOnLineDescriptionCode-OnLineDescriptionCode.rdf'"/>
             <xsl:with-param name="currElement" select="."/>
             <xsl:with-param name="refToDelete" select="$refToDelete"/>
             <xsl:with-param name="schema" select="$schema"/>
             <xsl:with-param name="labels" select="$labels"/>
+            <xsl:with-param name="lang" select="'it'"/>
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
@@ -164,32 +147,6 @@
     </xsl:for-each>
   </xsl:template>
 
-  <xsl:template mode="mode-iso19139" match="gmd:protocol|gmd:applicationProfile|gmd:description">
-    <xsl:param name="schema" select="$schema" required="no"/>
-    <xsl:param name="labels" select="$labels" required="no"/>
-    <xsl:param name="refToDelete" required="no"/>
-    <xsl:variable name="thesaurusId">
-      <xsl:choose>
-        <xsl:when test="boolean(./name()='gmd:protocol')">
-          <xsl:text>httpinspireeceuropaeumetadatacodelistProtocolValue-ProtocolValue.rdf</xsl:text>
-        </xsl:when>
-        <xsl:when test="boolean(./name()='gmd:applicationProfile')">
-          <xsl:text>httpinspireeceuropaeumetadatacodelistSpatialDataServiceType-SpatialDataServiceType.rdf</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:text>httpinspireeceuropaeumetadatacodelistOnLineDescriptionCode-OnLineDescriptionCode.rdf</xsl:text>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:call-template name="iso19139.rndt-select">
-      <xsl:with-param name="thesaurusId" select="$thesaurusId"/>
-      <xsl:with-param name="currElement" select="."/>
-      <xsl:with-param name="refToDelete" select="$refToDelete"/>
-      <xsl:with-param name="schema" select="$schema"/>
-      <xsl:with-param name="labels" select="$labels"/>
-    </xsl:call-template>
-  </xsl:template>
-
 
   <!--
       Produces a select for the field using the provided thesaurus id. Add also some javascript to handle element
@@ -201,6 +158,7 @@
     <xsl:param name="refToDelete"/>
     <xsl:param name="labels"/>
     <xsl:param name="schema"/>
+    <xsl:param name="lang"/>
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath($currElement)"/>
     <xsl:variable name="isoType" select="if (@gco:isoType) then @gco:isoType else ''"/>
     <xsl:variable name="fieldLabelConfig"
@@ -215,7 +173,15 @@
       <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table">
        <select name="select-{$currElement/gmx:Anchor/geonet:element/@ref}"  size="1">
           <xsl:for-each select="$concepts">
-            <option value="{@rdf:about}|{skos:prefLabel/text()}"><xsl:value-of select="skos:prefLabel/text()"/></option>
+            <!-- check if records exists for selected language otherwise use 'en' -->
+            <xsl:choose>
+              <xsl:when test="boolean(skos:prefLabel[@xml:lang=$lang])">
+                <option value="{@rdf:about[../skos:prefLabel/@xml:lang=$lang]}|{skos:prefLabel[@xml:lang=$lang]/text()}"><xsl:value-of select="skos:prefLabel/text()"/></option>
+              </xsl:when>
+              <xsl:otherwise>
+                <option value="{@rdf:about[../skos:prefLabel/@xml:lang='en']}|{skos:prefLabel[@xml:lang='en']/text()}"><xsl:value-of select="skos:prefLabel/text()"/></option>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:for-each>
        </select>
       </div>
@@ -225,7 +191,7 @@
         <xsl:attribute name="name" select="concat('_',$currElement/gmx:Anchor/geonet:element/@ref,'_xlinkCOLONhref')"/>
         <xsl:attribute name="id" select="concat('_',$currElement/gmx:Anchor/geonet:element/@ref,'_xlinkCOLONhref')"/>
       </input>
-      <script>
+      <script type="text/javascript">
         $(document).ready(function(){
         var id = <xsl:value-of select="$currElement/gmx:Anchor/geonet:element/@ref"/>;
         var currAnchorVal='<xsl:value-of select="$currElement/gmx:Anchor/text()"/>';
@@ -237,24 +203,21 @@
         var hiddenAnchorEl=$('#'+gnAnchor);
         var hiddenXlink=$('#'+gnHidden);
         if (currAnchorVal==='' || typeof currAnchorVal === 'undefined'){
-            console.log("sono in if")
-            var selectSplitted=selectEl.val().split('|');
-            hiddenAnchorEl.val(selectSplitted[1]);
-            hiddenXlink.val(selectSplitted[0]);
+          if (selectEl.val()!==null){
+              var selectSplitted=selectEl.val().split('|');
+              hiddenAnchorEl.val(selectSplitted[1]);
+              hiddenXlink.val(selectSplitted[0]);
+           }
         } else {
-            console.log("sono in else")
-            selectEl.val(currXlinkVal + '|' + currAnchorVal);
-            hiddenAnchorEl.val(currAnchorVal);
-            hiddenXlink.val(currXlinkVal);
+           selectEl.val(currXlinkVal + '|' + currAnchorVal);
+           hiddenAnchorEl.val(currAnchorVal);
+           hiddenXlink.val(currXlinkVal);
         }
         selectEl.on('change',function() {
-           console.log("sono in onchange")
-           var selectVal=this.value;
-           var splittedVal = selectVal.split('|');
-           hiddenAnchorEl.val(splittedVal[1]);
-           hiddenXlink.val(splittedVal[0]);
-           console.log("termino on change")
-
+          var selectVal=this.value;
+          var splittedVal = selectVal.split('|');
+          hiddenAnchorEl.val(splittedVal[1]);
+          hiddenXlink.val(splittedVal[0]);
         });
         });
       </script>

@@ -191,7 +191,7 @@
                                     codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
           </gmd:accessConstraints>
           <gmd:otherConstraints>
-            <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadatacodelist/LimitationsOnPublicAccess/noLimitations">Nessun vincolo all’accesso pubblico</gmx:Anchor>
+            <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadatacodelist/LimitationsOnPublicAccess"></gmx:Anchor>
           </gmd:otherConstraints>
         </gmd:MD_LegalConstraints>
       </gmd:resourceConstraints>
@@ -204,12 +204,14 @@
                                     codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
           </gmd:useConstraints>
           <gmd:otherConstraints>
-            <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabile</gmx:Anchor>
+            <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse"></gmx:Anchor>
           </gmd:otherConstraints>
         </gmd:MD_LegalConstraints>
       </gmd:resourceConstraints>
       <!-- L'elemento deve assumere uno dei valori della lista “ServiceType” di cui al § 3.4.5.1 - all. 2 DM (discovery, view, download, transformation, invoke, other) -->
-      <gco:LocalName codeSpace="http://inspire.ec.europa.eu/metadatacodelist/SpatialDataServiceType">other</gco:LocalName>
+      <srv:serviceType>
+        <gco:LocalName codeSpace="http://inspire.ec.europa.eu/metadatacodelist/SpatialDataServiceType">other</gco:LocalName>
+      </srv:serviceType>
       <srv:extent>
         <gmd:EX_Extent>
           <gmd:geographicElement>
