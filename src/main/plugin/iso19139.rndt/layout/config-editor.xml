@@ -874,7 +874,7 @@
                         </gmd:useConstraints>
                         <gmd:otherConstraints>
                           <gmx:Anchor
-                            xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply">no conditions to access and use</gmx:Anchor>
+                            xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply">Nessuna condizione applicabile</gmx:Anchor>
                         </gmd:otherConstraints>
                       </gmd:MD_LegalConstraints>
                     </gmd:resourceConstraints>
@@ -889,7 +889,7 @@
                         </gmd:useConstraints>
                         <gmd:otherConstraints>
                           <gmx:Anchor
-                            xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">conditions to access and use unknown</gmx:Anchor>
+                            xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">Condizioni sconosciute</gmx:Anchor>
                         </gmd:otherConstraints>
                       </gmd:MD_LegalConstraints>
                     </gmd:resourceConstraints>
