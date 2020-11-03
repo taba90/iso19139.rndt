@@ -154,6 +154,7 @@
   <format>Formato</format>
   <format_version>Versione</format_version>
   <spatialResolution>Risoluzione spaziale</spatialResolution>
+  <bitsPerValue>Risoluzione radiometrica</bitsPerValue>
   <spatialResolutionScale>Risoluzione spaziale (scala)</spatialResolutionScale>
   <spatialResolutionDistance>Risoluzione spaziale (distanza)</spatialResolutionDistance>
   <containsOperations>Operazioni</containsOperations>
