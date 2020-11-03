@@ -3701,7 +3701,33 @@
             </template>
           </action>
 
-          <field xpath ="gmd:MD_Metadata/gmd:spatialRepresentationInfo/*/gmd:axisDimensionProperties"/>
+          <field templateModeOnly="true" notDisplayedIfMissing="true" name="axisDimensionProperties"
+            xpath ="gmd:MD_Metadata/gmd:spatialRepresentationInfo/*/gmd:axisDimensionProperties">
+            <template>
+              <values>
+                <key label="dimensionName" xpath="gmd:MD_Dimension/gmd:dimensionName/gmd:MD_DimensionNameTypeCode/@codeListValue">
+                  <codelist name="gmd:MD_DimensionNameTypeCode"/>
+                </key>
+                <key label="dimensionSize" xpath="gmd:MD_Dimension/gmd:dimensionSize/gco:Integer">
+                </key>
+              </values>
+              <snippet>
+                <gmd:axisDimensionProperties>
+                  <gmd:MD_Dimension>
+                    <gmd:dimensionName>
+                      <gmd:MD_DimensionNameTypeCode
+                        codeListValue="{{dimensionName}}"
+                        codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_DimensionNameTypeCode"/>
+                    </gmd:dimensionName>
+                    <gmd:dimensionSize>
+                      <gco:Integer>{{dimensionSize}}</gco:Integer>
+                    </gmd:dimensionSize>
+                    <gn:copy select="gmd:resolution"/>
+                  </gmd:MD_Dimension>
+                </gmd:axisDimensionProperties>
+              </snippet>
+            </template>
+          </field>
           <action type="add"
                   btnLabel="axisDimensionProperties"
                   name="axisDimensionProperty"
