@@ -32,6 +32,7 @@
     <for name="gmd:nameOfMeasure" use="textarea"/>
     <for name="gmd:evaluationMethodDescription" use="textarea"/>
     <for name="gco:Record" use="number"/>
+    <for name="gco:Measure" use="number"/>
     <for name="gco:Distance" use="number"/>
     <for name="gco:Decimal" use="number"/>
     <for name="gco:Integer" use="number"/>
@@ -3701,33 +3702,9 @@
             </template>
           </action>
 
-          <field templateModeOnly="true" notDisplayedIfMissing="true" name="axisDimensionProperties"
-            xpath ="gmd:MD_Metadata/gmd:spatialRepresentationInfo/*/gmd:axisDimensionProperties">
-            <template>
-              <values>
-                <key label="dimensionName" xpath="gmd:MD_Dimension/gmd:dimensionName/gmd:MD_DimensionNameTypeCode/@codeListValue">
-                  <codelist name="gmd:MD_DimensionNameTypeCode"/>
-                </key>
-                <key label="dimensionSize" xpath="gmd:MD_Dimension/gmd:dimensionSize/gco:Integer">
-                </key>
-              </values>
-              <snippet>
-                <gmd:axisDimensionProperties>
-                  <gmd:MD_Dimension>
-                    <gmd:dimensionName>
-                      <gmd:MD_DimensionNameTypeCode
-                        codeListValue="{{dimensionName}}"
-                        codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_DimensionNameTypeCode"/>
-                    </gmd:dimensionName>
-                    <gmd:dimensionSize>
-                      <gco:Integer>{{dimensionSize}}</gco:Integer>
-                    </gmd:dimensionSize>
-                    <gn:copy select="gmd:resolution"/>
-                  </gmd:MD_Dimension>
-                </gmd:axisDimensionProperties>
-              </snippet>
-            </template>
-          </field>
+          <field name="axisDimensionProperties"
+            xpath ="gmd:MD_Metadata/gmd:spatialRepresentationInfo/*/gmd:axisDimensionProperties"/>
+
           <action type="add"
                   btnLabel="axisDimensionProperties"
                   name="axisDimensionProperty"
@@ -3747,7 +3724,8 @@
                       <gco:Integer/>
                     </gmd:dimensionSize>
                     <gmd:resolution>
-                      <gco:Measure uom="http://standards.iso.org/iso/19139/resources/uom/ML_gmxUom.xml#m"/>
+                      <gco:Measure uom="http://standards.iso.org/iso/19139/resources/uom/ML_gmxUom.xml#m">
+                      </gco:Measure>
                     </gmd:resolution>
                   </gmd:MD_Dimension>
                 </gmd:axisDimensionProperties>
