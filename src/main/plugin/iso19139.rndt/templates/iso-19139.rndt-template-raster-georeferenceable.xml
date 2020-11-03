@@ -126,7 +126,7 @@
       <gmd:citation>
         <gmd:CI_Citation>
           <gmd:title>
-            <gco:CharacterString>Template per raster "georeferenziabili" ISO19139.rndt</gco:CharacterString>
+            <gco:CharacterString>RNDTv2: Modello per raster georeferenziabili</gco:CharacterString>
           </gmd:title>
           <gmd:date>
             <gmd:CI_Date>
@@ -454,29 +454,6 @@
           </gmd:distributorContact>
         </gmd:MD_Distributor>
       </gmd:distributor>
-      <gmd:transferOptions>
-        <gmd:MD_DigitalTransferOptions>
-          <gmd:onLine>
-            <gmd:CI_OnlineResource>
-              <gmd:linkage>
-                <gmd:URL>http://</gmd:URL>
-              </gmd:linkage>
-              <gmd:protocol>
-                <gmx:Anchor xlink:href=""></gmx:Anchor>
-              </gmd:protocol>
-              <gmd:applicationProfile>
-                <gmx:Anchor xlink:href="" />
-              </gmd:applicationProfile>
-              <gmd:name gco:nilReason="missing">
-                <gco:CharacterString />
-              </gmd:name>
-              <gmd:description>
-                <gmx:Anchor xlink:href=""></gmx:Anchor>
-              </gmd:description>
-            </gmd:CI_OnlineResource>
-          </gmd:onLine>
-        </gmd:MD_DigitalTransferOptions>
-      </gmd:transferOptions>
     </gmd:MD_Distribution>
   </gmd:distributionInfo>
   <!-- QUALITÀ DEI DATI -->

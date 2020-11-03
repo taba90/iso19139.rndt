@@ -591,6 +591,7 @@
                      and not(contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text(), 'INSPIRE priority data set'))
                      and not(contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text(), 'Spatial scope'))
                      and not(contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text(), 'Registro dei dati di interesse generale per il RNDT'))
+                     and not(contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text(),'REGOLAMENTO (CE) N. 1205/2008'))
                      ]"
                    notDisplayedIfMissing="true"
                    name="keyword_con_thesaurus"
@@ -1033,27 +1034,6 @@
         <section name="identificationInfo">
 
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:characterSet"
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
-
-          <action type="add"
-                  btnLabel="characterSet"
-                  or="characterSet"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/*"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:characterSet)=0"
-          >
-            <template>
-              <snippet>
-                <gmd:characterSet>
-                  <gmd:MD_CharacterSetCode
-                    codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_CharacterSetCode"
-                    codeListValue="utf8"/>
-                </gmd:characterSet>
-              </snippet>
-            </template>
-          </action>
-
-          <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:presentationForm"
             del="."
             if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
@@ -1144,6 +1124,10 @@
                          <gmd:keyword gco:nilReason="missing">
                            <gmx:Anchor xlink:href=""/>
                          </gmd:keyword>
+                         <gmd:type>
+                           <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+                                                   codeListValue="theme">theme</gmd:MD_KeywordTypeCode>
+                         </gmd:type>
                          <gmd:thesaurusName>
                            <gmd:CI_Citation>
                              <gmd:title>
@@ -1161,6 +1145,13 @@
                                </gmd:CI_Date>
                              </gmd:date>
                            </gmd:CI_Citation>
+                           <gmd:identifier>
+                             <gmd:MD_Identifier>
+                               <gmd:code>
+                                 <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/it/thesaurus.download?ref=external.theme.httpinspireeceuropaeutheme-theme">geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme</gmx:Anchor>
+                               </gmd:code>
+                             </gmd:MD_Identifier>
+                           </gmd:identifier>
                          </gmd:thesaurusName>
                        </gmd:MD_Keywords>
                      </gmd:descriptiveKeywords>
@@ -1214,7 +1205,7 @@
                                   <gmd:identifier>
                                      <gmd:MD_Identifier>
                                         <gmd:code>
-                                           <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/eng/thesaurus.download?ref=external.theme.httpinspireeceuropaeumetadatacodelistPriorityDataset-PriorityDataset">geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistPriorityDataset-PriorityDataset</gmx:Anchor>
+                                           <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/ita/thesaurus.download?ref=external.theme.httpinspireeceuropaeumetadatacodelistPriorityDataset-PriorityDataset">geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistPriorityDataset-PriorityDataset</gmx:Anchor>
                                         </gmd:code>
                                      </gmd:MD_Identifier>
                                   </gmd:identifier>
@@ -1274,7 +1265,7 @@
                                   <gmd:identifier>
                                      <gmd:MD_Identifier>
                                         <gmd:code>
-                                           <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/eng/thesaurus.download?ref=external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope">geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope</gmx:Anchor>
+                                           <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/ita/thesaurus.download?ref=external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope">geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope</gmx:Anchor>
                                         </gmd:code>
                                      </gmd:MD_Identifier>
                                   </gmd:identifier>
@@ -1331,7 +1322,7 @@
                           <gmd:identifier>
                             <gmd:MD_Identifier>
                               <gmd:code>
-                                <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/eng/thesaurus.download?ref=external.theme.rndt-all1">rndt-all1</gmx:Anchor>
+                                <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/ita/thesaurus.download?ref=external.theme.rndt-all1">rndt-all1</gmx:Anchor>
                               </gmd:code>
                             </gmd:MD_Identifier>
                           </gmd:identifier>
@@ -1376,7 +1367,26 @@
 
           </section> <!-- FINE SEZIONE KEYWORDS -->
 
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:characterSet"/>
+          <field
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:characterSet"
+            if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
+
+          <action type="add"
+                  btnLabel="characterSet"
+                  or="characterSet"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:characterSet)=0"
+          >
+            <template>
+              <snippet>
+                <gmd:characterSet>
+                  <gmd:MD_CharacterSetCode
+                    codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_CharacterSetCode"
+                    codeListValue="utf8"/>
+                </gmd:characterSet>
+              </snippet>
+            </template>
+          </action>
 
           <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:status"
@@ -1424,7 +1434,7 @@
                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"
           />
 
-          <field
+          <field name="spatialResolution"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance"
                  del="../.."
                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
@@ -2050,7 +2060,7 @@
                             <gmd:CI_Citation>
                               <gmd:title>
                                 <gmx:Anchor
-                                  xlink:href="http://data.europa.eu/eli/reg/2010/1089">REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l'interoperabilità dei set di dati territoriali e dei servizi di dati territoriali</gmx:Anchor>
+                                    xlink:href="http://data.europa.eu/eli/reg/2010/1089">REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l'interoperabilità dei set di dati territoriali e dei servizi di dati territoriali</gmx:Anchor>
                               </gmd:title>
                               <gmd:date>
                                 <gmd:CI_Date>
@@ -2756,7 +2766,9 @@
                    del="."/>
 
             <action type="add" name="onlineResource" or="transferOptions" btnLabel="transferOption"
-                    in="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution">
+                    in="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution"
+                    if="count(gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution)>0"
+            >
               <template>
                 <snippet>
                   <gmd:transferOptions>
@@ -2789,6 +2801,50 @@
                       </gmd:onLine>
                     </gmd:MD_DigitalTransferOptions>
                   </gmd:transferOptions>
+                </snippet>
+              </template>
+            </action>
+
+            <action type="add" name="onlineResource" or="distributionInfo" btnLabel="transferOption"
+                    in="/gmd:MD_Metadata"
+                    if="count(gmd:MD_Metadata/gmd:distributionInfo)=0"
+            >
+              <template>
+                <snippet>
+                  <gmd:distributionInfo>
+                    <gmd:MD_Distribution>
+                      <gmd:transferOptions>
+                        <gmd:MD_DigitalTransferOptions>
+                          <gmd:onLine>
+                            <gmd:CI_OnlineResource>
+                              <gmd:linkage>
+                                <gmd:URL>http://url.accesso.servizio.it</gmd:URL>
+                              </gmd:linkage>
+                              <gmd:protocol>
+                                <gmx:Anchor
+                                  xlink:href=""/>
+                              </gmd:protocol>
+                              <gmd:applicationProfile>
+                                <gmx:Anchor
+                                  xlink:href=""/>
+                              </gmd:applicationProfile>
+                              <gmd:name>
+                                <gco:CharacterString/>
+                              </gmd:name>
+                              <gmd:description>
+                                <gmx:Anchor xlink:href=""/>
+                              </gmd:description>
+                              <gmd:function>
+                                <gmd:CI_OnLineFunctionCode
+                                  codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download">
+                                </gmd:CI_OnLineFunctionCode>
+                              </gmd:function>
+                            </gmd:CI_OnlineResource>
+                          </gmd:onLine>
+                        </gmd:MD_DigitalTransferOptions>
+                      </gmd:transferOptions>
+                    </gmd:MD_Distribution>
+                  </gmd:distributionInfo>
                 </snippet>
               </template>
             </action>
@@ -2875,81 +2931,24 @@
         <section name="serviceIdentification">
           <!-- services specific -->
 
-          <section name="serviceClassification" displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:thesaurusName[contains(./gmd:CI_Citation/gmd:title/gco:CharacterString,'REGOLAMENTO (CE) N. 1205/2008')]) > 0">
+          <section name="serviceClassification">
 
-            <field xpath="gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[contains(../gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString,'REGOLAMENTO (CE) N. 1205/2008')]"
-                   name="keyword"
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:descriptiveKeywords[contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text(),'REGOLAMENTO (CE) N. 1205/2008')]"
                    del="."
-                   if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[contains(../gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString,'REGOLAMENTO (CE) N. 1205/2008')])>1"
-            >
-              <template>
-                <values>
-                  <key label="keyword" xpath="gmd:keyword">
-                  </key>
-                </values>
-                <snippet>
-                  <gmd:keyword>
-                      {{keyword}}
-                  </gmd:keyword>
-                  <gn:copy select="gmd:thesaurusName"/>
-                </snippet>
-              </template>
-            </field>
-
-            <field xpath="gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[contains(../gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString,'REGOLAMENTO (CE) N. 1205/2008')]"
-                   name="keyword"
-                   del="../.."
-                   if="not(count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[contains(../gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString,'REGOLAMENTO (CE) N. 1205/2008')])>1)"
-            >
-              <template>
-                <values>
-                  <key label="keyword" xpath="gmd:keyword">
-                  </key>
-                </values>
-                <snippet>
-                  <gmd:keyword>
-                      {{keyword}}
-                  </gmd:keyword>
-                  <gn:copy select="gmd:thesaurusName"/>
-                </snippet>
-              </template>
-            </field>
-
-            <action type="add"
-                    or="keyword"
-                    in="gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(./gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString,'REGOLAMENTO (CE) N. 1205/2008')]"
-            >
-              <template>
-                <snippet label="anchor">
-                  <gmd:keyword>
-                    <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadatacodelist/SpatialDataServiceCategory/">
-                    </gmx:Anchor>
-                  </gmd:keyword>
-                </snippet>
-                <snippet label="text">
-                  <gmd:keyword>
-                    <gco:CharacterString>
-                    </gco:CharacterString>
-                  </gmd:keyword>
-                </snippet>
-              </template>
-            </action>
-          </section>
+                   if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:descriptiveKeywords[contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text(),'REGOLAMENTO (CE) N. 1205/2008')])>0"
+            />
 
           <action type="add"
                   btnLabel="serviceClassification"
-                  name="gmd:descriptiveKeywords"
                   or="descriptiveKeywords"
-                  in="gmd:MD_Metadata/gmd:identificationInfo/*"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString,'REGOLAMENTO (CE) N. 1205/2008')])=0">
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:descriptiveKeywords[contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text(),'REGOLAMENTO (CE) N. 1205/2008')])=0">
             <template>
               <snippet>
                 <gmd:descriptiveKeywords>
                   <gmd:MD_Keywords>
                     <gmd:keyword>
-                      <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadatacodelist/SpatialDataServiceCategory/humanCatalogueViewer">
-                        humanCatalogViewer
-                      </gmx:Anchor>
+                      <gmx:Anchor/>
                     </gmd:keyword>
                     <gmd:thesaurusName>
                       <gmd:CI_Citation>
@@ -2970,6 +2969,13 @@
                             </gmd:dateType>
                           </gmd:CI_Date>
                         </gmd:date>
+                        <gmd:identifier>
+                          <gmd:MD_Identifier>
+                            <gmd:code>
+                              <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/ita/thesaurus.download?ref=external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory-SpatialDataServiceCategory">geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory-SpatialDataServiceCategory</gmx:Anchor>
+                            </gmd:code>
+                          </gmd:MD_Identifier>
+                        </gmd:identifier>
                       </gmd:CI_Citation>
                     </gmd:thesaurusName>
                   </gmd:MD_Keywords>
@@ -2977,6 +2983,7 @@
               </snippet>
             </template>
           </action>
+          </section>
 
 
           <field
@@ -3145,7 +3152,9 @@
                  del="."/>
 
           <action type="add" name="onlineResource" or="transferOptions" btnLabel="transferOption"
-                  in="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution">
+                  in="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution"
+                  if ="count(gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution)>0"
+          >
             <template>
               <snippet>
                 <gmd:transferOptions>
@@ -3174,6 +3183,46 @@
                     </gmd:onLine>
                   </gmd:MD_DigitalTransferOptions>
                 </gmd:transferOptions>
+              </snippet>
+            </template>
+          </action>
+
+          <action type="add" name="onlineResource" or="distributionInfo" btnLabel="transferOption"
+                  in="/gmd:MD_Metadata"
+                  if="count(gmd:MD_Metadata/gmd:distributionInfo)=0"
+          >
+            <template>
+              <snippet>
+                <gmd:distributionInfo>
+                  <gmd:MD_Distribution>
+                    <gmd:transferOptions>
+                      <gmd:MD_DigitalTransferOptions>
+                        <gmd:onLine>
+                          <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                              <gmd:URL>http://url.accesso.servizio.it</gmd:URL>
+                            </gmd:linkage>
+                            <gmd:protocol>
+                              <gmx:Anchor
+                                xlink:href=""/>
+                            </gmd:protocol>
+                            <gmd:name>
+                              <gco:CharacterString/>
+                            </gmd:name>
+                            <gmd:description>
+                              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadatacodelist/OnLineDescriptionCode/accessPoint">access point</gmx:Anchor>
+                            </gmd:description>
+                            <gmd:function>
+                              <gmd:CI_OnLineFunctionCode
+                                codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download">
+                              </gmd:CI_OnLineFunctionCode>
+                            </gmd:function>
+                          </gmd:CI_OnlineResource>
+                        </gmd:onLine>
+                      </gmd:MD_DigitalTransferOptions>
+                    </gmd:transferOptions>
+                  </gmd:MD_Distribution>
+                </gmd:distributionInfo>
               </snippet>
             </template>
           </action>
