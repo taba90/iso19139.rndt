@@ -109,10 +109,10 @@
 			<xs:extension base="gco:AbstractObject_Type">
 				<xs:sequence>
 					<xs:element name="linkage" type="gmd:URL_PropertyType"/>
-					<xs:element name="protocol" type="gco:CharacterString_PropertyType" minOccurs="1"/>
-					<xs:element name="applicationProfile" type="gco:CharacterString_PropertyType" minOccurs="1"/>
+					<xs:element name="protocol" type="gco:CharacterString_PropertyType" minOccurs="0"/>
+					<xs:element name="applicationProfile" type="gco:CharacterString_PropertyType" minOccurs="0"/>
 					<xs:element name="name" type="gco:CharacterString_PropertyType" minOccurs="0"/>
-					<xs:element name="description" type="gco:CharacterString_PropertyType" minOccurs="1"/>
+					<xs:element name="description" type="gco:CharacterString_PropertyType" minOccurs="0"/>
 					<xs:element name="function" type="gmd:CI_OnLineFunctionCode_PropertyType" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
