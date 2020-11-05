@@ -891,4 +891,9 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  <xsl:template match="gmd:CI_RoleCode">
+    <gmd:CI_RoleCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="{./text()}">
+      <xsl:value-of select="./text()"/>
+    </gmd:CI_RoleCode>
+  </xsl:template>
 </xsl:stylesheet>
