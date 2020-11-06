@@ -145,6 +145,28 @@
     <xsl:apply-templates mode="index" select="*|@*"/>
   </xsl:template>
 
+  <xsl:template mode="index" match="gmd:fileIdentifier/gco:CharacterString">
+
+    <xsl:variable name="fileId"><xsl:value-of select="text()"/></xsl:variable>
+
+    <xsl:variable name="ipaDefined" select="contains($fileId, ':')"/>
+
+    <xsl:if test="$ipaDefined">
+      <xsl:variable name="iPA">
+        <xsl:value-of select="substring-before($fileId,':')"/>
+      </xsl:variable>
+      <Field name="ipa" string="{string($iPA)}" store="false" index="true"/>
+      <xsl:variable name="thesaurusDir" select="util:getThesaurusDir()"/>
+      <xsl:variable name="thesaurusFile" select="concat($thesaurusDir, '/external/thesauri/theme/','amministrazioni.rdf')"/>
+      <xsl:variable name="thesaurus" select="document($thesaurusFile)"/>
+      <xsl:variable name="label" select="$thesaurus/rdf:RDF/skos:Concept/skos:prefLabel[contains(../@rdf:about,$iPA)]"/>
+      <xsl:variable name="PA" select="$label"/>
+      <xsl:if test="string($PA) != ''">
+        <Field name="pa" string="{$PA}" store="false" index="true"/>
+      </xsl:if>
+    </xsl:if>
+  </xsl:template>
+
 
   <xsl:template mode="index"
                 match="gmd:extent/gmd:EX_Extent/gmd:description/gco:CharacterString[normalize-space(.) != '']">
