@@ -40,6 +40,7 @@
   <xsl:include href="../convert/functions.xsl"/>
   <xsl:include href="../../../xsl/utils-fn.xsl"/>
   <xsl:include href="inspire-util.xsl" />
+  <xsl:include href="../rndt-utils.xsl"/>
 
   <!-- This file defines what parts of the metadata are indexed by Lucene
        Searches can be conducted on indexes defined here.
@@ -152,17 +153,20 @@
     <xsl:variable name="ipaDefined" select="contains($fileId, ':')"/>
 
     <xsl:if test="$ipaDefined">
+
       <xsl:variable name="iPA">
-        <xsl:value-of select="substring-before($fileId,':')"/>
+          <xsl:call-template name="substring-before-last">
+            <xsl:with-param name="string1" select="$fileId"/>
+            <xsl:with-param name="string2" select="':'"/>
+          </xsl:call-template>
       </xsl:variable>
       <Field name="ipa" string="{string($iPA)}" store="false" index="true"/>
       <xsl:variable name="thesaurusDir" select="util:getThesaurusDir()"/>
       <xsl:variable name="thesaurusFile" select="concat($thesaurusDir, '/external/thesauri/theme/','amministrazioni.rdf')"/>
       <xsl:variable name="thesaurus" select="document($thesaurusFile)"/>
-      <xsl:variable name="label" select="$thesaurus/rdf:RDF/skos:Concept/skos:prefLabel[contains(../@rdf:about,$iPA)]"/>
-      <xsl:variable name="PA" select="$label"/>
-      <xsl:if test="string($PA) != ''">
-        <Field name="pa" string="{$PA}" store="false" index="true"/>
+      <xsl:variable name="PA" select="$thesaurus/rdf:RDF/skos:Concept[@rdf:about=$iPA]/skos:prefLabel"/>
+      <xsl:if test="$PA != ''">
+        <Field name="pa" string="{string($PA)}" store="false" index="true"/>
       </xsl:if>
     </xsl:if>
   </xsl:template>
