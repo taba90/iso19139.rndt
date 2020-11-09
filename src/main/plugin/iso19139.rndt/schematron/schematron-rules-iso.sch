@@ -128,7 +128,7 @@ USA.
 		<sch:rule context="//gmd:MD_LegalConstraints[gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions']
 			|//*[@gco:isoType='gmd:MD_LegalConstraints' and gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions']">
 			<sch:let name="access" value="not(gmd:otherConstraints)
-				or count(gmd:otherConstraints[gmx:Anchor = '']) > 0
+				or count(gmd:otherConstraints[gmx:Anchor = '' or gco:CharacterString = '']) > 0
 				or gmd:otherConstraints/@gco:nilReason='missing'"/>
 			<sch:assert
 				test="$access = false()"
@@ -138,12 +138,13 @@ USA.
 			<sch:report
 				test="$access = false()"
 				><sch:value-of select="$loc/strings/report.M9"/>
-				<sch:value-of select="gmd:otherConstraints/gmx:Anchor"/>
+				<sch:value-of select="gmd:otherConstraints/*"/>
 			</sch:report>
 		</sch:rule>
 		<sch:rule context="//gmd:MD_LegalConstraints[gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions']
 			|//*[@gco:isoType='gmd:MD_LegalConstraints' and gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions']">
-			<sch:let name="use" value="(not(gmd:otherConstraints) or not(string(gmd:otherConstraints/gmx:Anchor)) or gmd:otherConstraints/@gco:nilReason='missing')"/>
+			<sch:let name="use" value="(not(gmd:otherConstraints) or (not(string(gmd:otherConstraints/gmx:Anchor))
+			and not(string(gmd:otherConstraints/gco:CharacterString))) or gmd:otherConstraints/@gco:nilReason='missing')"/>
 			<sch:assert
 				test="$use = false()"
 				><sch:value-of select="$loc/strings/alert.M9.use"/>
@@ -151,7 +152,7 @@ USA.
 			<sch:report
 				test="$use = false()"
 				><sch:value-of select="$loc/strings/report.M9"/>
-				<sch:value-of select="gmd:otherConstraints/gmx:Anchor"/>
+				<sch:value-of select="gmd:otherConstraints/*"/>
 			</sch:report>
 		</sch:rule>
 	</sch:pattern>
