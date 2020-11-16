@@ -10,7 +10,6 @@
 >
 
   <xsl:template match="@*|node()">
-    <xsl:message>Itero ricorsivamente xml</xsl:message>
     <xsl:copy>
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
@@ -22,7 +21,7 @@
     <xsl:choose>
       <xsl:when test="count(gmx:CI_Citation/gmd:title[not(gmx:Anchor) or gmx:Anchor/@xlink:href!='http://www.eionet.europa.eu/gemet/inspire_themes'])>0
       or string(gmx:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date) != '2008-06-01'">
-        <xsl:message>Correggo gemet</xsl:message>
+        <xsl:message>Fix GEMET thesaurus info</xsl:message>
         <xsl:copy>
           <gmd:CI_Citation>
             <gmd:title>
@@ -44,7 +43,6 @@
         </xsl:copy>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:message>In otherwise</xsl:message>
         <xsl:copy-of select="."/>
       </xsl:otherwise>
     </xsl:choose>
