@@ -602,9 +602,8 @@ temporalSamplingService;temporalProximityAnalysisService;metadataProcessingServi
 		<sch:title>$loc/strings/M200</sch:title>
 		<sch:rule context="//gmd:MD_Metadata/gmd:identificationInfo/*/*:extent/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent[//gml:TimePeriod]">
 
-			<sch:let name="testBegin" value="count(gml:TimePeriod//gml:beginPosition[text() != '' or @indeterminatePosition != ''])>0"/>
-      <sch:let name="testEnd"   value="count(gml:TimePeriod//gml:endPosition[text() != '' or @indeterminatePosition != ''])>0"/>
-
+			<sch:let name="testBegin" value="count(gml:TimePeriod//gml:beginPosition[text() != '' or @indeterminatePosition != ''])>0 and count(gml:TimePeriod//gml:beginPosition[text() = '' and @indeterminatePosition == 'before'])=0"/>
+      <sch:let name="testEnd"   value="count(gml:TimePeriod//gml:endPosition[text() != '' or @indeterminatePosition != ''])>0 and count(gml:TimePeriod//gml:endPosition[text() = '' and @indeterminatePosition == 'after'])=0"/>
 			<sch:assert test="$testBegin">$loc/strings/alert.M201</sch:assert>
 			<sch:assert test="$testEnd">$loc/strings/alert.M202</sch:assert>
 
