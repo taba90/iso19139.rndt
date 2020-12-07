@@ -223,7 +223,7 @@
     <xsl:template match="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/*/gmd:code"  priority="10">
         <xsl:message>==== RESOURCE IDENTIFIER ====</xsl:message>
         <xsl:copy>
-            <gco:CharacterString><xsl:value-of select="$resId"/></gco:CharacterString>
+            <gco:CharacterString><xsl:value-of select="concat(/root/env/siteURL,'/resources.get?id=',$resId)"/></gco:CharacterString>
         </xsl:copy>
     </xsl:template>
 
