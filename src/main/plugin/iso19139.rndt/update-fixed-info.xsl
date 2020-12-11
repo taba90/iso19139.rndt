@@ -219,6 +219,20 @@
         </xsl:choose>
     </xsl:variable>
 
+  <xsl:template match="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation[not(gmd:identifier/*/gmd:code)]"  priority="10">
+    <xsl:message>==== RESOURCE IDENTIFIER ====</xsl:message>
+    <xsl:copy>
+      <xsl:apply-templates select="node()|@*"/>
+      <gmd:identifier>
+       <gmd:MD_Identifier>
+        <gmd:code>
+         <gco:CharacterString><xsl:value-of select="$resId"/></gco:CharacterString>
+        </gmd:code>
+       </gmd:MD_Identifier>
+      </gmd:identifier>
+    </xsl:copy>
+  </xsl:template>
+
 
     <xsl:template match="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/*/gmd:code"  priority="10">
         <xsl:message>==== RESOURCE IDENTIFIER ====</xsl:message>

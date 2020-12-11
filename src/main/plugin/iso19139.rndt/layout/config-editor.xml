@@ -568,22 +568,6 @@
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*
                  /gmd:citation/gmd:CI_Citation/gmd:identifier/*/gmd:code"/>
 
-          <action type="add" btnLabel="datasetcode" or="identifier" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier)=0"
-          >
-            <template>
-              <snippet>
-                <gmd:identifier>
-                  <gmd:MD_Identifier>
-                    <gmd:code>
-                      <gco:CharacterString></gco:CharacterString>
-                    </gmd:code>
-                  </gmd:MD_Identifier>
-                </gmd:identifier>
-              </snippet>
-            </template>
-          </action>
-
           <field
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:abstract"
                  or="abstract"
